@@ -1,0 +1,21 @@
+.container{
+    text-align: center;
+    max-width: 400px;
+    align-items: center;
+    margin: 10vh auto;
+}
+
+.bloque{
+    background: rgb(214, 193, 185);
+    height: 120px;
+    border-radius: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: auto;
+    padding-right: auto;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}

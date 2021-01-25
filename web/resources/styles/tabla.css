@@ -1,0 +1,28 @@
+#tablero{
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    border-spacing: 10px;
+    background: #F9776A;
+    border: 2px solid #d65f54;
+    border-collapse: separate;
+}
+
+td{
+    border-radius: 70px;
+    background: #FFF;
+    border: 2px solid #d65f54;
+    width: 55px;
+    height: 55px;
+    cursor: pointer;
+}
+td:hover{
+    background: rgb(224, 175, 175)
+}
+
+#jugadores{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
