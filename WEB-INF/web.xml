@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app>
+<display-name>Proyecto Final</display-name>
+<description>Desarrollo de un juego de cuatro en raya online</description>
+<servlet>
+<servlet-name>index</servlet-name>
+<description>Servlet de la página de inicio</description>
+<servlet-class>Index</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>index</servlet-name>
+<url-pattern>/inicio</url-pattern>
+</servlet-mapping>
+<session-config>
+<session-timeout>30</session-timeout>
+</session-config>
+</web-app>
