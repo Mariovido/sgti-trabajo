@@ -5,20 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cuatro En Raya</title>
     <link rel="stylesheet" href="resources/styles/main.css"> 
+    <link rel="stylesheet" href="resources/styles/registro.css">
+    <script>
+        function validar(){
+            var x = document.forms["formulario"]["usuario"].value;
+            var y = document.forms["formulario"]["mail"].value;
+            var z = document.forms["formulario"]["pw"].value;
+            if (x == "" || y == "" || z == "") {
+            alert("Por favor, complete todos los campos");
+            return false;
+            }
+        }
+    </script>
 </head>
 <body>
     <header class="main-header">
         <nav class="main-header__nav">
             <ul class="main-header__item-list">
-                <li class="main-header__item"><a class="active" href="/sgti-trabajo/web/register.html">Registrarse</a></li>
-                <li class="main-header__item"><a href="/sgti-trabajo/web/login.html">Iniciar sesión</a></li>
+                <li class="main-header__item"><a class="active" href="">Registrarse</a></li>
+                <li class="main-header__item"><a href="login.html">Iniciar sesión</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <h1>Regístrese</h1>
-        <p>Aquí podrá jugar al 4 en raya</p>
+        <div class="user">
+            <header class="user__header">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt="" />
+                <h1 class="user__title">Regístrese para poder jugar</h1>
+            </header>
+            <form name="formulario" class="form" action="" method="POST" onsubmit="return validar()">
+                <div class="form__group">
+                    <input name="usuario" type="text" placeholder="Usuario" class="form__input" />
+                </div>
+                
+                <div class="form__group">
+                    <input name="mail" type="email" placeholder="Email" class="form__input" />
+                </div>
+                
+                <div class="form__group">
+                    <input name="pw" type="password" placeholder="Contraseña" class="form__input" />
+                </div>
+
+                <button class="btn" type="submit">Registrarse</button>
+            </form>
+            </div>
     </main>
 </body>
 </html>
