@@ -17,7 +17,7 @@ public class Registro extends HttpServlet {
 
         //para obtener la variable de sesion y saber si esta conectado o no, se pasa esta variable a un string
         //misesion = (String)sesion.getAttribute("misesion");
-        
+        nombre = req.getParameter("NAME");
         nick = req.getParameter("USER");
         correo = req.getParameter("MAIL");
         pass = req.getParameter("PASS");

@@ -34,6 +34,7 @@ public class Login extends HttpServlet {
             if(!rs.next()) {
                 // si no hay coincidencia se vuelve a inicio
                 res.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");
+                res.
 
             } else {
                 // si hay un usuario se crea una variable de sessión
