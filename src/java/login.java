@@ -32,13 +32,13 @@ public class login extends HttpServlet{
 
         if(!rs.next()){
             // si no hay coincidencia se vuelve a inicio
-            response.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");
+            res.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");
 
         }else{
             // si hay un usuario se crea una variable de sessión
             HttpSession misesion = req.getSession(true);
             // y se redirige a la pantalla de registro de partidas iniciadas
-            response.sendRedirect("http://localhost:8080/sgti-trabajo/")
+            res.sendRedirect("http://localhost:8080/sgti-trabajo/")
             
         }
     }catch(Exception e){
