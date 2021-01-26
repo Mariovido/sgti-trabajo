@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="resources/styles/registro.css">
     <script>
         function validar(){
-            var x = document.forms["formulario-login"]["usuario"].value;
-            var z = document.forms["formulario-login"]["pw"].value;
+            var x = document.forms["formulario-login"]["USER"].value;
+            var z = document.forms["formulario-login"]["PASS"].value;
             if (x == "" || z == "") {
             alert("Por favor, complete todos los campos");
             return false;
@@ -35,11 +35,19 @@
             </header>
             <form name="formulario-login" class="form" action="" method="POST" onsubmit="return validar()">
                 <div class="form__group">
+<<<<<<< HEAD
                     <input name="user" type="text" placeholder="Usuario" class="form__input" />
                 </div>
                 
                 <div class="form__group">
                     <input name="pass" type="password" placeholder="Contraseña" class="form__input" />
+=======
+                    <input name="USER" type="text" placeholder="Usuario" class="form__input" />
+                </div>
+                
+                <div class="form__group">
+                    <input name="PASS" type="password" placeholder="Contraseña" class="form__input" />
+>>>>>>> 0f98287eba14a9e6997f81f37e91b792c32d0ee6
                 </div>
 
                 <button class="btn" type="submit">Iniciar sesión</button>

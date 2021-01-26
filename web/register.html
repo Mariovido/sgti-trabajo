@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="resources/styles/registro.css">
     <script>
         function validar(){
-            var x = document.forms["formulario"]["usuario"].value;
-            var y = document.forms["formulario"]["mail"].value;
-            var z = document.forms["formulario"]["pw"].value;
+            var x = document.forms["formulario"]["USER"].value;
+            var y = document.forms["formulario"]["MAIL"].value;
+            var z = document.forms["formulario"]["PASS"].value;
             if (x == "" || y == "" || z == "") {
             alert("Por favor, complete todos los campos");
             return false;
@@ -36,15 +36,23 @@
             </header>
             <form name="formulario" class="form" action="" method="POST" onsubmit="return validar()">
                 <div class="form__group">
+<<<<<<< HEAD
                     <input name="user" type="text" placeholder="Usuario" class="form__input" />
+=======
+                    <input name="USER" type="text" placeholder="Usuario" class="form__input" />
+>>>>>>> 0f98287eba14a9e6997f81f37e91b792c32d0ee6
                 </div>
                 
                 <div class="form__group">
-                    <input name="mail" type="email" placeholder="Email" class="form__input" />
+                    <input name="MAIL" type="email" placeholder="Email" class="form__input" />
                 </div>
                 
                 <div class="form__group">
+<<<<<<< HEAD
                     <input name="pass" type="password" placeholder="Contraseña" class="form__input" />
+=======
+                    <input name="PASS" type="password" placeholder="Contraseña" class="form__input" />
+>>>>>>> 0f98287eba14a9e6997f81f37e91b792c32d0ee6
                 </div>
 
                 <button class="btn" type="submit">Registrarse</button>
