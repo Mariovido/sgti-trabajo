@@ -10,7 +10,7 @@ public class Principal extends HttpServlet {
             HttpSession sesion = req.getSession(false);
 
             if(sesion!=null) {
-                RequestDispatcher rd = req.getRequestDispatcher("web/principal.html");
+                RequestDispatcher rd = req.getRequestDispatcher("/web/principal.html");
                 rd.forward(req, res);
             } else {
                 res.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");

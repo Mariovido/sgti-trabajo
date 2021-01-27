@@ -10,7 +10,7 @@ public class Cuenta extends HttpServlet {
             HttpSession sesion = req.getSession(false);
 
             if(sesion!=null) {
-                RequestDispatcher rd = req.getRequestDispatcher("web/cuenta.html");
+                RequestDispatcher rd = req.getRequestDispatcher("/web/cuenta.html");
                 rd.forward(req, res);
             } else {
                 res.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");

@@ -5,9 +5,6 @@ import javax.servlet.http.*;
 
 public class Login extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-        RequestDispatcher rd = req.getRequestDispatcher("web/login.html");
-        rd.forward(req, res);
-
         Connection con;
         Statement st;
         ResultSet rs;
