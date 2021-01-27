@@ -27,10 +27,18 @@ td:hover{
     font-weight: bold;
 }
 
+.j2{
+    cursor: auto;
+    background: #5146F0;
+}
+.j2:hover{
+    background: #5146F0;
+}
+
 .j1{
-    cursor: none;
-    background: black;
+    cursor: auto;
+    background: #F0DB69;
 }
 .j1:hover{
-    background: black;
+    background: #F0DB69;
 }
