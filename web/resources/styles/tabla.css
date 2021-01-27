@@ -26,3 +26,11 @@ td:hover{
     font-size: 30px;
     font-weight: bold;
 }
+
+.j1{
+    cursor: none;
+    background: black;
+}
+.j1:hover{
+    background: black;
+}
