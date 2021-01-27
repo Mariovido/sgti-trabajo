@@ -39,6 +39,7 @@ public class Registro extends HttpServlet {
             
             // si hay un usuario se crea una variable de sessión
             HttpSession misesion = req.getSession(true);
+            misesion.setAttribute("IdUsuario", rs.getString(1));
             // y se redirige a la pantalla de registro de partidas iniciadas
             res.sendRedirect("http://localhost:8080/sgti-trabajo/principal");
         } catch(Exception e){
