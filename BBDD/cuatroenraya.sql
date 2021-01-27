@@ -88,6 +88,8 @@ CREATE TABLE IF NOT EXISTS `cuatroenraya`.`Partidas` (
   `Turno` INT NULL,
   `Finalizada` BIT(1) NOT NULL,
   `TopeJugadores` BIT(1) NOT NULL,
+  `JugadorUno` INT NOT NULL,
+  `JugadorDos` INT NOT NULL,
   `UsuariosPartidas_IdUsuario` INT NOT NULL,
   `UsuariosPartidas_IdPartida` INT NOT NULL,
   `PartidaStats_IdPartida` INT NOT NULL,
