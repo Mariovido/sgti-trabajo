@@ -5,7 +5,7 @@ import javax.servlet.http.*;
 
 public class Registro extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-        RequestDispatcher rd = req.getRequestDispatcher("web/register.html");
+        RequestDispatcher rd = req.getRequestDispatcher("web/registro.html");
         rd.forward(req, res);
 
         Connection con;
