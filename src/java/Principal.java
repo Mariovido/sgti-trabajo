@@ -16,6 +16,7 @@ public class Principal extends HttpServlet {
             HttpSession sesion = req.getSession(false);
 
             if(sesion!=null) {
+                out.close();
                 res.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");
             } else {
                 IdUsuario = (String)sesion.getAttribute("IdUsuario");
@@ -56,10 +57,14 @@ public class Principal extends HttpServlet {
                 out.println("    </main>");
                 out.println("</body>");
                 out.println("</html>");
-
+                
+                rs.close();
+                st.close();
+                con.close();
             }
         } catch (Exception e){
             out.println("<div> Error " + e + "</div>");
         }
+        out.close();
     }
 }
