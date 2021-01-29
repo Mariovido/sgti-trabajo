@@ -16,9 +16,6 @@ public class Principal extends HttpServlet {
             HttpSession sesion = req.getSession(false);
 
             if(sesion!=null) {
-                out.close();
-                res.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");
-            } else {
                 IdUsuario = (String)sesion.getAttribute("IdUsuario");
 
                 Class.forName("com.mysql.jdbc.Driver");
@@ -50,8 +47,16 @@ public class Principal extends HttpServlet {
                 out.println("        <p>Aquí podrá ver todas sus partidas iniciadas</p>");
                 out.println("        <div class='container'>");
                 while (!rs.next()) {
-                    // Aquí podemos no se que poner en el href xD.
-                    out.println("            <div class='bloque' onclick='location.href=''>Partida 1</div>");
+                    // En el onclick hay que poner el servlet de game y enviar la id del juego seleccionado
+                    if(rs.getString(3) == 1){
+                        out.println("            <div class='bloque' onclick='location.href=''>Partida finalizada </br>Id:"+rs.getString(1)+"</div>");
+                    }
+                    else if(rs.getString(2) == IdUsuario){  
+                        out.println("            <div class='bloque' onclick='location.href=''>Su turno </br>Id:"+rs.getString(1)+"</div>");
+                    }
+                    else{
+                        out.println("            <div class='bloque' onclick='location.href=''>Turno del oponente </br>Id:"+rs.getString(1)+"</div>");
+                    }
                 }
                 out.println("        </div>");
                 out.println("    </main>");
@@ -61,6 +66,9 @@ public class Principal extends HttpServlet {
                 rs.close();
                 st.close();
                 con.close();
+            } else {
+                out.close();
+                res.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");
             }
         } catch (Exception e){
             out.println("<div> Error " + e + "</div>");
