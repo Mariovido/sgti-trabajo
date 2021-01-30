@@ -6,6 +6,19 @@
     <title>Cuatro En Raya</title>
     <link rel="stylesheet" href="web/resources/styles/main.css"> 
     <link rel="stylesheet" href="web/resources/styles/partidas.css"> 
+    <link rel="stylesheet" href="web/resources/styles/registro.css"> 
+    <link rel="stylesheet" href="resources/styles/main.css"> 
+    <link rel="stylesheet" href="resources/styles/partidas.css"> 
+    <link rel="stylesheet" href="resources/styles/registro.css"> 
+    <script>
+        function validar(){
+            var x = document.forms["nueva"]["IDUSUARIO"].value;
+            if (x == "") {
+            alert("Por favor, inserte el ID del contrincante");
+            return false;
+            }
+        }
+    </script>
 </head>
 <body>
     <header class="main-header">
@@ -20,8 +33,26 @@
     <main>
         <h1>Bienvenido</h1>
         <p>Aquí podrá ver todas sus partidas iniciadas</p>
+        <div class="user">
+            <header class="user__header">
+                <h1 class="user__title">Inicie una nueva partida</h1>
+            </header>
+        <form class="form" name="nueva" action="" method="POST" onsubmit="validar()">
+            <div class="form__group">
+                <input type="text" name="IDUSUARIO" class="form__input">
+            </div>
+            <div class="form__group">
+                <input type="submit" value="Crear nueva partida" class="form__input">
+            </div>
+        </form>
+        </div>
         <div class="container">
-            <div class="bloque" onclick="location.href='game.html'">Partida 1</div>
+            <div class="bloque">Partida 1 
+                <form method="POST" action="">
+                    <input type="hidden" value="" name="ID">
+                    <input type="submit" value="Seleccionar" class="form__input">
+                </form>
+            </div>
             <div class="bloque" onclick="">Partida 2</div>
             <div class="bloque" onclick="">Partida 3</div>
             <div class="bloque" onclick="">Partida 4</div>
