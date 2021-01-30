@@ -63,22 +63,22 @@ public class Principal extends HttpServlet {
                 out.println("        <div class='container'>");
                 while (!rs.next()) {
                     // En el onclick hay que poner el servlet de game y enviar la id del juego seleccionado
-                    if(rs.getString(3) == 1){
-                        out.println("            <div class='bloque' onclick='location.href=''>Partida finalizada </br>Id:"+rs.getString(1)+"</div>");
+                    if(rs.getInt(3) == 1){
+                        out.println("            <div class='bloque' onclick='location.href=''>Partida finalizada </br>Id:" + rs.getString(1) + "</div>");
                         
                     }
                     else if(rs.getString(2) == IdUsuario){  
-                        out.println("            <div class='bloque' onclick='location.href=''>Su turno </br>Id:"+rs.getString(1));
+                        out.println("            <div class='bloque' onclick='location.href=''>Su turno </br>Id:" + rs.getString(1));
                         out.println("               <form method='POST' action=''>");
-                        out.println("                   <input type='hidden' value='"+rs.getString(1)+"' name='ID'>");
+                        out.println("                   <input type='hidden' value='" + rs.getString(1) + "' name='ID'>");
                         out.println("                   <input type='submit' value='Seleccionar' class='form__input'>");
                         out.println("               </form>");
                         out.println("             </div>");
                     }
                     else{
-                        out.println("            <div class='bloque' onclick='location.href=''>Turno del oponente </br>Id:"+rs.getString(1));
+                        out.println("            <div class='bloque' onclick='location.href=''>Turno del oponente </br>Id:" + rs.getString(1));
                         out.println("               <form method='POST' action=''>");
-                        out.println("                   <input type='hidden' value='"+rs.getString(1)"' name='ID'>");
+                        out.println("                   <input type='hidden' value='" + rs.getString(1) + "' name='ID'>");
                         out.println("                   <input type='submit' value='Seleccionar' class='form__input'>");
                         out.println("               </form>");
                         out.println("             </div>");
