@@ -15,30 +15,6 @@ CREATE SCHEMA IF NOT EXISTS `cuatroenraya` DEFAULT CHARACTER SET utf8 ;
 USE `cuatroenraya` ;
 
 -- -----------------------------------------------------
--- Table `cuatroenraya`.`UsuariosPartidas`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cuatroenraya`.`UsuariosPartidas` (
-  `IdUsuario` INT NOT NULL,
-  `IdPartida` INT NOT NULL,
-  PRIMARY KEY (`IdUsuario`, `IdPartida`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `cuatroenraya`.`UsuarioStats`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cuatroenraya`.`UsuarioStats` (
-  `IdUsuario` INT NOT NULL,
-  `Jugadas` INT NOT NULL,
-  `Ganadas` INT NOT NULL,
-  `Perdidas` INT NOT NULL,
-  `Empates` INT NOT NULL,
-  `MediaTurnos` FLOAT NOT NULL,
-  PRIMARY KEY (`IdUsuario`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `cuatroenraya`.`Usuarios`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cuatroenraya`.`Usuarios` (
@@ -49,33 +25,7 @@ CREATE TABLE IF NOT EXISTS `cuatroenraya`.`Usuarios` (
   `Metodo` ENUM('texto', 'md5', 'sha1') NOT NULL,
   `Nombre` VARCHAR(60) NULL,
   `Conectado` BIT(1) NOT NULL,
-  `UsuariosPartidas_IdUsuario` INT NOT NULL,
-  `UsuariosPartidas_IdPartida` INT NOT NULL,
-  `UsuarioStats_IdUsuario` INT NOT NULL,
-  PRIMARY KEY (`IdUsuario`, `UsuariosPartidas_IdUsuario`, `UsuariosPartidas_IdPartida`, `UsuarioStats_IdUsuario`),
-  INDEX `fk_Usuarios_UsuariosPartidas_idx` (`UsuariosPartidas_IdUsuario` ASC, `UsuariosPartidas_IdPartida` ASC) VISIBLE,
-  INDEX `fk_Usuarios_UsuarioStats1_idx` (`UsuarioStats_IdUsuario` ASC) VISIBLE,
-  CONSTRAINT `fk_Usuarios_UsuariosPartidas`
-    FOREIGN KEY (`UsuariosPartidas_IdUsuario` , `UsuariosPartidas_IdPartida`)
-    REFERENCES `cuatroenraya`.`UsuariosPartidas` (`IdUsuario` , `IdPartida`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Usuarios_UsuarioStats1`
-    FOREIGN KEY (`UsuarioStats_IdUsuario`)
-    REFERENCES `cuatroenraya`.`UsuarioStats` (`IdUsuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `cuatroenraya`.`PartidaStats`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cuatroenraya`.`PartidaStats` (
-  `IdPartida` INT NOT NULL,
-  `TurnosJugados` INT NOT NULL,
-  `Ganador` INT NULL,
-  PRIMARY KEY (`IdPartida`))
+  PRIMARY KEY (`IdUsuario`))
 ENGINE = InnoDB;
 
 
@@ -90,20 +40,63 @@ CREATE TABLE IF NOT EXISTS `cuatroenraya`.`Partidas` (
   `TopeJugadores` BIT(1) NOT NULL,
   `JugadorUno` INT NOT NULL,
   `JugadorDos` INT NOT NULL,
-  `UsuariosPartidas_IdUsuario` INT NOT NULL,
-  `UsuariosPartidas_IdPartida` INT NOT NULL,
-  `PartidaStats_IdPartida` INT NOT NULL,
-  PRIMARY KEY (`IdPartida`, `UsuariosPartidas_IdUsuario`, `UsuariosPartidas_IdPartida`, `PartidaStats_IdPartida`),
-  INDEX `fk_Partidas_UsuariosPartidas1_idx` (`UsuariosPartidas_IdUsuario` ASC, `UsuariosPartidas_IdPartida` ASC) VISIBLE,
-  INDEX `fk_Partidas_PartidaStats1_idx` (`PartidaStats_IdPartida` ASC) VISIBLE,
-  CONSTRAINT `fk_Partidas_UsuariosPartidas1`
-    FOREIGN KEY (`UsuariosPartidas_IdUsuario` , `UsuariosPartidas_IdPartida`)
-    REFERENCES `cuatroenraya`.`UsuariosPartidas` (`IdUsuario` , `IdPartida`)
+  PRIMARY KEY (`IdPartida`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `cuatroenraya`.`UsuariosPartidas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cuatroenraya`.`UsuariosPartidas` (
+  `IdUsuario` INT NOT NULL,
+  `IdPartida` INT NOT NULL,
+  PRIMARY KEY (`IdUsuario`, `IdPartida`),
+  INDEX `UsuariosPartidas_Partidas_idx` (`IdPartida` ASC) VISIBLE,
+  CONSTRAINT `UsuariosPartidas_Usuarios`
+    FOREIGN KEY (`IdUsuario`)
+    REFERENCES `cuatroenraya`.`Usuarios` (`IdUsuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Partidas_PartidaStats1`
-    FOREIGN KEY (`PartidaStats_IdPartida`)
-    REFERENCES `cuatroenraya`.`PartidaStats` (`IdPartida`)
+  CONSTRAINT `UsuariosPartidas_Partidas`
+    FOREIGN KEY (`IdPartida`)
+    REFERENCES `cuatroenraya`.`Partidas` (`IdPartida`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `cuatroenraya`.`PartidaStats`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cuatroenraya`.`PartidaStats` (
+  `IdPartida` INT NOT NULL,
+  `TurnosJugados` INT NOT NULL DEFAULT 0,
+  `Ganador` INT NULL,
+  `PuntosJugadorUno` INT NOT NULL DEFAULT 0,
+  `PuntosJugadorDos` INT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`IdPartida`),
+  CONSTRAINT `PartidaStats_Partidas`
+    FOREIGN KEY (`IdPartida`)
+    REFERENCES `cuatroenraya`.`Partidas` (`IdPartida`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `cuatroenraya`.`UsuarioStats`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cuatroenraya`.`UsuarioStats` (
+  `IdUsuario` INT NOT NULL,
+  `Jugadas` INT NOT NULL DEFAULT 0,
+  `Ganadas` INT NOT NULL DEFAULT 0,
+  `Perdidas` INT NOT NULL DEFAULT 0,
+  `Empates` INT NOT NULL DEFAULT 0,
+  `MediaTurnos` FLOAT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`IdUsuario`),
+  CONSTRAINT `UsuariosStats_Usuarios`
+    FOREIGN KEY (`IdUsuario`)
+    REFERENCES `cuatroenraya`.`Usuarios` (`IdUsuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
