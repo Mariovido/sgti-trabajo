@@ -23,9 +23,16 @@ public class Login extends HttpServlet {
         }
 
         try { 
-            con = DriverManager.getConnection("jdbc:mysql://");
+            con = DriverManager.getConnection("jdbc:mysql://jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
+            
+             if (con==null){
+                out.println("<div> no hay conexion</div>");
+            }
+           // if(con!=null){
+              //  out.println("<div> hay conexion con bbdd </div>");
+            //}
             st= con.createStatement();
-            SQL="SELECT * FROM Usuarios WHERE Nick='" + user + "' AND ContraseÃ±a='" + pass + "'";
+            SQL="SELECT * FROM Usuarios WHERE Nick='" + user + "' AND Contraseña='" + pass + "'";
             rs=st.executeQuery(SQL);
 
             if(!rs.next()) {
@@ -37,7 +44,7 @@ public class Login extends HttpServlet {
                 res.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");
 
             } else {
-                // si hay un usuario se crea una variable de sessiÃ³n
+                // si hay un usuario se crea una variable de sessión
                 HttpSession misesion = req.getSession(true);
                 misesion.setAttribute("IdUsuario", rs.getString(1));
                 out.close();

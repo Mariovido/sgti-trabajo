@@ -6,10 +6,10 @@ import javax.servlet.http.*;
 public class Registro extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         Connection con;
-        Statement st;
+        Statement st,st2;
         ResultSet rs;
-        String SQL, nick, correo, pass, metodo, nombre;
-        int conectado;
+        String SQL,SQL2, nick, correo, pass, metodo, nombre;
+        byte conectado;
         PrintWriter out;
 
         //para obtener la variable de sesion y saber si esta conectado o no, se pasa esta variable a un string
@@ -19,7 +19,7 @@ public class Registro extends HttpServlet {
         correo = req.getParameter("MAIL");
         pass = req.getParameter("PASS");
         metodo = "texto";
-        nombre = req.getParameter("NOMBRE");
+        nombre = req.getParameter("NAME");
         conectado = 1;
         
         out = res.getWriter();
@@ -31,18 +31,31 @@ public class Registro extends HttpServlet {
         }
 
         try { 
-            con = DriverManager.getConnection("jdbc:mysql://");
-            st = con.createStatement();
-            SQL="INSERT INTO Usuarios (Nick, Correo, ContraseÃ±a, Metodo, Nombre, Conectado) VALUES ('" + nick + "', '" +
-            correo + "', '" + pass + "', '" + metodo + "', '" + nombre + "', '" + conectado + ")";
-            rs=st.executeQuery(SQL);
             
-            // si hay un usuario se crea una variable de sessiÃ³n
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
+            if (con==null){
+                out.println("<div>no hay conexion</div>");
+            }
+            
+            //if(con!=null){
+               // out.println("<div> hay conexion con bbdd </div>");
+            //}
+            st = con.createStatement();
+            SQL="INSERT INTO Usuarios (Nick, Correo, Contraseña, Metodo, Nombre, Conectado) VALUES ('" + nick + "', '" +
+            correo + "', '" + pass + "', '" + metodo + "', '" + nombre + "', " + conectado + ")";
+            int result =st.executeUpdate(SQL);
+            
+            // si hay un usuario se crea una variable de sessión
             HttpSession misesion = req.getSession(true);
+            // creamos la SQL para recoger el IdUsuario
+            st2 = con.createStatement();
+            SQL2 = "SELECT * FROM Usuarios";
+            rs = st2.executeQuery(SQL2);
             misesion.setAttribute("IdUsuario", rs.getString(1));
             // y se redirige a la pantalla de registro de partidas iniciadas
             rs.close();
             st.close();
+            st2.close();
             con.close();
             
             res.sendRedirect("http://localhost:8080/sgti-trabajo/principal");

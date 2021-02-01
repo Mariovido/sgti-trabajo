@@ -19,7 +19,10 @@ public class Cuenta extends HttpServlet {
                 IdUsuario = (String)sesion.getAttribute("IdUsuario");
                 Class.forName("com.mysql.jdbc.Driver");
 
-                con = DriverManager.getConnection("jdbc:mysql://");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
+            if (con==null){
+                out.println("<div>no hay conexion</div>");
+            }
                 st = con.createStatement();
                 SQL = "SELECT * FROM Usuarios WHERE Usuarios.IdUsuario = " + IdUsuario;
                 rs=st.executeQuery(SQL);

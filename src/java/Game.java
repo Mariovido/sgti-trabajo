@@ -25,7 +25,10 @@ public class Game extends HttpServlet {
                 IdUsuario = (String)sesion.getAttribute("IdUsuario");
 
                 Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://");
+                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
+                 if (con==null){
+                     out.println("<div>no hay conexion</div>");
+                 }
                 st = con.createStatement();
                 SQL = "SELECT Partidas.EstadoPartida, Partidas.Turno, Partidas.JugadorUno, Partidas.JugadorDos, PartidaStats.TurnosJugados FROM Partidas, PartidaStats WHERE Partidas.IdPartida = PartidaStats.IdPartida AND IdPartida.IdPartida = " + IdPartida;
                 rs=st.executeQuery(SQL);
@@ -56,7 +59,7 @@ public class Game extends HttpServlet {
                 out.println("        </div>");
                 out.println("    </br>");
                 out.println("        <table id='tablero'><tbody>");
-                //AquÃ­ faltarÃ­a escribir el tablero.
+                //Aquí faltaría escribir el tablero.
                 out.println("        </tbody></table>");
                 out.println("    </main>");
                 out.println("</body>");
