@@ -33,7 +33,7 @@ public class Registro extends HttpServlet {
             
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
             con.setAutoCommit(false);
-            SQL="INSERT INTO Usuarios (Nick, Correo, Contraseña, Metodo, Nombre, Conectado) VALUES ('" + nick + "', '" +
+            SQL="INSERT INTO Usuarios (Nick, Correo, Contrase�a, Metodo, Nombre, Conectado) VALUES ('" + nick + "', '" +
             correo + "', '" + pass + "', '" + metodo + "', '" + nombre + "', " + conectado + ")";
             ps = con.prepareStatement(SQL);
             result = ps.executeUpdate();
@@ -42,12 +42,12 @@ public class Registro extends HttpServlet {
           
             // si hay un usuario se crea una variable de session
             HttpSession misesion = req.getSession(true);
-
+            
             res.setContentType("text/html");
             out.println("<HTML><BODY>");
             out.println("<DIV>El registro ha sido un éxito clicke para continuar</DIV>");
             out.println("<FORM ACTION = '/sgti-trabajo/principal' METHOD = 'POST'>");
-            out.println("<SELECT NAME = 'MAIL' VALUE ='" + correo + "'>");
+            out.println("<INPUT TYPE = 'TEXT' NAME = 'MAIL' VALUE ='" + correo + "'>");
             out.println("<INPUT TYPE = 'SUBMIT' VALUE = 'CONTINUAR'>");
             out.println("</FORM></BODY></HTML>");
             ps.close();

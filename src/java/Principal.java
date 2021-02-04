@@ -15,9 +15,8 @@ public class Principal extends HttpServlet {
             HttpSession sesion = req.getSession(false);     
 
             if(sesion!=null) {
-                System.out.println("Estoy aquí 1");
-                res.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");
-            } else {
+
+                
                 System.out.println("Estoy aquí 2");
                 out = res.getWriter();
                 //IdUsuario = (String)sesion.getAttribute("IdUsuario");
@@ -65,6 +64,11 @@ public class Principal extends HttpServlet {
                 st.close();
                 con.close();
                 out.close();
+                
+            } else {
+                
+                res.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");
+                
             }
         } catch (Exception e){
             System.out.println("<div> Error " + e + "</div>");
