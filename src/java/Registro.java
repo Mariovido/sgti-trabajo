@@ -51,15 +51,17 @@ public class Registro extends HttpServlet {
             SQL2 = "SELECT * FROM Usuarios WHERE Usuarios.Nick='"+nick+"'";
             rs = st.executeQuery(SQL2);
 
+            res.setContentType("text/html");
+            out.println("<HTML><BODY>");
             while(!rs.next()){
-                out.println("<HTML><BODY>");
-                out.println("<div>El registro ha sido un éxito clicke para continuar</div>")
-                out.println("<FORM ACTION = '/sgti-trabajo/principal' METHOD = 'GET'");
-                out.println("<SELECT NAME = 'IdUsuario' VALUE ='" + rs.getInt(1) + "'</SELECT><BR>");
+                out.println("<DIV>El registro ha sido un éxito clicke para continuar</DIV>");
+                out.println("<FORM ACTION = '/sgti-trabajo/principal' METHOD = 'GET'>");
+                out.println("<SELECT NAME = 'IdUsuario' VALUE ='" + rs.getInt(1) + "'><BR>");
                 out.println("<INPUT TYPE = 'SUBMIT' VALUE = 'CONTINUAR'>");
-                out.println("</FORM></BODY></HTML>");
                 misesion.setAttribute("IdUsuario", rs.getInt(1));
             }
+            out.println("<DIV>No se ha podido realizar el registro</DIV>");
+            out.println("</FORM></BODY></HTML>");
             ps.close();
             rs.close();
             st.close();
