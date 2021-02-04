@@ -53,9 +53,11 @@ public class Registro extends HttpServlet {
 
             while(!rs.next()){
                 out.println("<HTML><BODY>");
-                out.println("<FORM ACTION = '/sgti-trabajo/registro' METHOD = 'GET'");
-                out.println("<SELECT NAME = IdUsuario VALUE =" + rs.getInt(1));
-                out.println("</FORM></SELECT></BODY></HTML>")
+                out.println("<div>El registro ha sido un éxito clicke para continuar</div>")
+                out.println("<FORM ACTION = '/sgti-trabajo/principal' METHOD = 'GET'");
+                out.println("<SELECT NAME = 'IdUsuario' VALUE ='" + rs.getInt(1) + "'</SELECT><BR>");
+                out.println("<INPUT TYPE = 'SUBMIT' VALUE = 'CONTINUAR'>");
+                out.println("</FORM></BODY></HTML>");
                 misesion.setAttribute("IdUsuario", rs.getInt(1));
             }
             ps.close();
@@ -63,8 +65,6 @@ public class Registro extends HttpServlet {
             st.close();
             con.close();
             out.close();
-            res.sendRedirect("/sgti-trabajo/principal");
-                
         } catch(Exception e){
             System.out.println( "<div> Hay un error en el codigo </div>"+ e );
         }
