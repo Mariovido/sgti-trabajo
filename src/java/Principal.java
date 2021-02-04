@@ -11,16 +11,17 @@ public class Principal extends HttpServlet {
         String SQL, IdUsuario;
         PrintWriter out;
 
-        out = res.getWriter();
         try {
+            out = res.getWriter();
             HttpSession sesion = req.getSession(false);
+            out.println("<div>Hola<div>");
 
             if(sesion!=null) {
                 out.close();
                 res.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");
             } else {
                 IdUsuario = (String)sesion.getAttribute("IdUsuario");
-
+                out.println("<div>Hola2<div>");
                 Class.forName("com.mysql.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
                 if (con==null){
@@ -50,10 +51,10 @@ public class Principal extends HttpServlet {
                 out.println("    </header>");
                 out.println("    <main>");
                 out.println("        <h1>Bienvenido</h1>");
-                out.println("        <p>AquÌ podr· ver todas sus partidas iniciadas</p>");
+                out.println("        <p>Aqu√≠ podr√° ver todas sus partidas iniciadas</p>");
                 out.println("        <div class='container'>");
                 while (!rs.next()) {
-                    // AquÌ podemos no se que poner en el href xD.
+                    // Aqu√≠ podemos no se que poner en el href xD.
                     out.println("            <div class='bloque' onclick='location.href=''>Partida 1</div>");
                 }
                 out.println("        </div>");
@@ -64,10 +65,10 @@ public class Principal extends HttpServlet {
                 rs.close();
                 st.close();
                 con.close();
+                out.close();
             }
         } catch (Exception e){
             out.println("<div> Error " + e + "</div>");
         }
-        out.close();
     }
 }
