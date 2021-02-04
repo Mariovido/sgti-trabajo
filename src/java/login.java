@@ -28,7 +28,7 @@ public class Login extends HttpServlet {
                 st.close();
                 con.close();
                // out.close();
-                res.sendRedirect("http://localhost:8080/sgti-trabajo/web/inicio.html");
+                res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/web/inicio");
             } else {
                 // si hay un usuario se crea una variable de session
                 HttpSession misesion = req.getSession(true);

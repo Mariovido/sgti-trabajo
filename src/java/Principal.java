@@ -63,7 +63,7 @@ public class Principal extends HttpServlet {
                 out.close();
                 
             } else {   
-                res.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");
+                res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/inicio");
             }
         } catch (Exception e){
             System.out.println("<div> Error " + e + "</div>");

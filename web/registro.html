@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cuatro En Raya</title>
-    <link rel="stylesheet" href="/web/resources/styles/main.css"> 
-    <link rel="stylesheet" href="/web/resources/styles/registro.css">
+    <link rel="stylesheet" href="http://juegocraya.duckdns.org:8080/sgti-trabajo/web/resources/styles/main.css"> 
+    <link rel="stylesheet" href="http://juegocraya.duckdns.org:8080/sgti-trabajo/web/resources/styles/registro.css">
     <script>
         function validar(){
             var x = document.forms["formulario"]["USER"].value;
@@ -23,7 +23,7 @@
         <nav class="main-header__nav">
             <ul class="main-header__item-list">
                 <li class="main-header__item"><a class="active" href="">Registrarse</a></li>
-                <li class="main-header__item"><a href="http://localhost:8080/sgti-trabajo/web/login.html">Iniciar sesión</a></li>
+                <li class="main-header__item"><a href="http://juegocraya.duckdns.org:8080/sgti-trabajo/web/login.html">Iniciar sesión</a></li>
             </ul>
         </nav>
     </header>
@@ -34,7 +34,7 @@
                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt="" />
                 <h1 class="user__title">Regístrese para poder jugar</h1>
             </header>
-            <form name="formulario" class="form" action="/sgti-trabajo/registro" method="POST" onsubmit="return validar()">
+            <form name="formulario" class="form" action="http://juegocraya.duckdns.org:8080/sgti-trabajo/registro" method="POST" onsubmit="return validar()">
                 <div class="form__group">
                     <input name="NAME" type="text" placeholder="Nombre" class="form__input" />
                 </div>
