@@ -52,7 +52,11 @@ public class Registro extends HttpServlet {
             rs = st.executeQuery(SQL2);
 
             while(!rs.next()){
-                misesion.setAttribute("IdUsuario", rs.getString(1));
+                out.println("<HTML><BODY>");
+                out.println("<FORM ACTION = '/sgti-trabajo/registro' METHOD = 'GET'");
+                out.println("<SELECT NAME = IdUsuario VALUE =" + rs.getInt(1));
+                out.println("</FORM></SELECT></BODY></HTML>")
+                misesion.setAttribute("IdUsuario", rs.getInt(1));
             }
             ps.close();
             rs.close();
