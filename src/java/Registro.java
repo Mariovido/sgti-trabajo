@@ -33,7 +33,7 @@ public class Registro extends HttpServlet {
             
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
             con.setAutoCommit(false);
-            SQL="INSERT INTO Usuarios (Nick, Correo, ContraseÃ±a, Metodo, Nombre, Conectado) VALUES ('" + nick + "', '" +
+            SQL="INSERT INTO Usuarios (Nick, Correo, Contraseña, Metodo, Nombre, Conectado) VALUES ('" + nick + "', '" +
             correo + "', '" + pass + "', '" + metodo + "', '" + nombre + "', " + conectado + ")";
             ps = con.prepareStatement(SQL);
             result = ps.executeUpdate();

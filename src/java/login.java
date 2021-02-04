@@ -15,24 +15,25 @@ public class Login extends HttpServlet {
         pass = req.getParameter("PASS");
 
         try {
-            out = res.getWriter();
+            
             Class.forName("com.mysql.jdbc.Driver"); 
-            con = DriverManager.getConnection("jdbc:mysql://jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
 
             st= con.createStatement();
-            SQL="SELECT * FROM Usuarios WHERE Nick='" + user + "' AND Contraseña='" + pass + "'";
+            SQL="SELECT * FROM Usuarios WHERE Nick='" + user + "' AND Contrase�a='" + pass + "'";
             rs=st.executeQuery(SQL);
 
             if(!rs.next()) {
                 rs.close();
                 st.close();
                 con.close();
-                out.close();
-                res.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");
+               // out.close();
+                res.sendRedirect("http://localhost:8080/sgti-trabajo/web/inicio.html");
             } else {
                 // si hay un usuario se crea una variable de session
                 HttpSession misesion = req.getSession(true);
                 // y se redirige a la pantalla de registro de partidas iniciadas
+                out = res.getWriter();
                 res.setContentType("text/html");
                 out.println("<HTML><BODY>");
                 out.println("<DIV>El login ha sido un éxito clicke para continuar</DIV>");
