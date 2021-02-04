@@ -4,34 +4,38 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class Principal extends HttpServlet {
-    public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+    public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         Connection con;
         Statement st;
         ResultSet rs;
         String SQL, IdUsuario;
         PrintWriter out;
+        
 
         try {
             out = res.getWriter();
             HttpSession sesion = req.getSession(false);
-            out.println("<div>Hola<div>");
+           
 
             if(sesion!=null) {
                 out.close();
                 res.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");
             } else {
-                IdUsuario = (String)sesion.getAttribute("IdUsuario");
-                out.println("<div>Hola2<div>");
+                //IdUsuario = (String)sesion.getAttribute("IdUsuario");
+                IdUsuario = "13";
                 Class.forName("com.mysql.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
                 if (con==null){
                     out.println("<div>no hay conexion</div>");
                 }
+                
+                
                 st = con.createStatement();
                 SQL = "SELECT Partidas.IdPartida, Partidas.Turno, Partidas.Finalizada FROM Partidas, UsuarioPartidas WHERE Partidas.IdPartida = UsuarioPartidas.IdPartida AND UsuarioPartidas.IdUsuario = " + IdUsuario;
                 rs=st.executeQuery(SQL);
 
                 //HTML
+                res.setContentType("texxt/html");
                 out.println("<!DOCTYPE html>");
                 out.println("<html lang='en'>");
                 out.println("<head>");
@@ -68,7 +72,7 @@ public class Principal extends HttpServlet {
                 out.close();
             }
         } catch (Exception e){
-            out.println("<div> Error " + e + "</div>");
+            System.out.println("<div> Error " + e + "</div>");
         }
     }
 }
