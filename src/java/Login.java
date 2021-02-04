@@ -20,7 +20,7 @@ public class Login extends HttpServlet {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
 
             st= con.createStatement();
-            SQL="SELECT * FROM Usuarios WHERE Nick='" + user + "' AND ContraseÃ±a='" + pass + "'";
+            SQL="SELECT * FROM Usuarios WHERE Nick='" + user + "' AND Contraseña='" + pass + "'";
             rs=st.executeQuery(SQL);
 
             if(!rs.next()) {
@@ -28,7 +28,7 @@ public class Login extends HttpServlet {
                 st.close();
                 con.close();
                // out.close();
-                res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/web/inicio");
+                res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/inicio");
             } else {
                 // si hay un usuario se crea una variable de session
                 HttpSession misesion = req.getSession(true);
