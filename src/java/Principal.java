@@ -4,35 +4,30 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class Principal extends HttpServlet {
-    public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+    public void doPost(HttpServletRequest req, HttpServletResponse res) {
         Connection con;
         Statement st;
         ResultSet rs;
         String SQL, IdUsuario;
         PrintWriter out;
         
-
         try {
-            out = res.getWriter();
-            HttpSession sesion = req.getSession(false);
-           
+            HttpSession sesion = req.getSession(false);     
 
             if(sesion!=null) {
-                out.close();
+                System.out.println("Estoy aquí 1");
                 res.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");
             } else {
+                System.out.println("Estoy aquí 2");
+                out = res.getWriter();
                 //IdUsuario = (String)sesion.getAttribute("IdUsuario");
                 IdUsuario = "13";
                 Class.forName("com.mysql.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
-                if (con==null){
-                    out.println("<div>no hay conexion</div>");
-                }
-                
                 
                 st = con.createStatement();
                 SQL = "SELECT Partidas.IdPartida, Partidas.Turno, Partidas.Finalizada FROM Partidas, UsuarioPartidas WHERE Partidas.IdPartida = UsuarioPartidas.IdPartida AND UsuarioPartidas.IdUsuario = " + IdUsuario;
-                rs=st.executeQuery(SQL);
+                rs = st.executeQuery(SQL);
 
                 //HTML
                 res.setContentType("texxt/html");
