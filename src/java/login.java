@@ -20,7 +20,7 @@ public class Login extends HttpServlet {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
 
             st= con.createStatement();
-            SQL="SELECT * FROM Usuarios WHERE Nick='" + user + "' AND Contraseña='" + pass + "'";
+            SQL="SELECT * FROM Usuarios WHERE Nick='" + user + "' AND ContraseÃ±a='" + pass + "'";
             rs=st.executeQuery(SQL);
 
             if(!rs.next()) {

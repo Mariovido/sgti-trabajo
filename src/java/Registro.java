@@ -22,18 +22,14 @@ public class Registro extends HttpServlet {
         nombre = req.getParameter("NAME");
         conectado = 1;
         
-        try{
-            out = res.getWriter();
-       
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-            } catch(Exception e) {
-                out.println("<div> No se pudo cargar el puente jdbc </div>");
-            }
-            
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
             con.setAutoCommit(false);
-            SQL="INSERT INTO Usuarios (Nick, Correo, Contrase�a, Metodo, Nombre, Conectado) VALUES ('" + nick + "', '" +
+
+            // HACER EL SELECT Y COMPROBAR QUE EXISTE O NO EL NICK.
+
+            SQL="INSERT INTO Usuarios (Nick, Correo, Contraseña, Metodo, Nombre, Conectado) VALUES ('" + nick + "', '" +
             correo + "', '" + pass + "', '" + metodo + "', '" + nombre + "', " + conectado + ")";
             ps = con.prepareStatement(SQL);
             result = ps.executeUpdate();
@@ -42,7 +38,8 @@ public class Registro extends HttpServlet {
           
             // si hay un usuario se crea una variable de session
             HttpSession misesion = req.getSession(true);
-            
+
+            out = res.getWriter();
             res.setContentType("text/html");
             out.println("<HTML><BODY>");
             out.println("<DIV>El registro ha sido un éxito clicke para continuar</DIV>");

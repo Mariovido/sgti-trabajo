@@ -26,7 +26,7 @@ public class Principal extends HttpServlet {
                 rs = st.executeQuery(SQL);
 
                 //HTML
-                res.setContentType("texxt/html");
+                res.setContentType("text/html");
                 out.println("<!DOCTYPE html>");
                 out.println("<html lang='en'>");
                 out.println("<head>");
