@@ -18,7 +18,6 @@ public class Principal extends HttpServlet {
             if(sesion!=null) {
                 out = res.getWriter();
                 //IdUsuario = (String)sesion.getAttribute("IdUsuario");
-
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
                 //recogemos el nick del form 
@@ -30,6 +29,7 @@ public class Principal extends HttpServlet {
                 // se ha comprobado que ni el nick ni el rs2 es null.
                 if(rs2.next()){
                     IdUsuario = rs2.getInt(1);
+                    sesion.setAttribute("IdUsuario", IdUsuario);
                     //out.println(IdUsuario);
                     // se ha comprobado que se recoge bien el IdUsuario
 
@@ -82,7 +82,7 @@ public class Principal extends HttpServlet {
                         }
                         else if(rs.getString(2).equals(String.valueOf(IdUsuario))){  
                             out.println("            <div class='bloque'>Su turno </br>Id:"+rs.getString(1));
-                            out.println("               <form method='POST' action=''>");
+                            out.println("               <form method='POST' action='/sgti-trabajo/game'>");
                             out.println("                   <input type='hidden' value='"+rs.getString(1)+"' name='ID'>");
                             out.println("                   <input type='submit' value='Seleccionar' class='form__input'>");
                             out.println("               </form>");
@@ -90,7 +90,7 @@ public class Principal extends HttpServlet {
                         }
                         else{
                             out.println("            <div class='bloque'>Turno del oponente </br>Id:"+rs.getString(1));
-                            out.println("               <form method='POST' action=''>");
+                            out.println("               <form method='POST' action='/sgti-trabajo/game'>");
                             out.println("                   <input type='hidden' value='"+rs.getString(1)+"' name='ID'>");
                             out.println("                   <input type='submit' value='Seleccionar' class='form__input'>");
                             out.println("               </form>");
