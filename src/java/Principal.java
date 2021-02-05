@@ -18,7 +18,7 @@ public class Principal extends HttpServlet {
             if(sesion!=null) {
                 out = res.getWriter();
                 //IdUsuario = (String)sesion.getAttribute("IdUsuario");
-                
+
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
                 //recogemos el nick del form 
@@ -32,7 +32,7 @@ public class Principal extends HttpServlet {
                     IdUsuario = rs2.getInt(1);
                     //out.println(IdUsuario);
                     // se ha comprobado que se recoge bien el IdUsuario
-                    
+
                     st = con.createStatement();
                     SQL = "SELECT Partidas.IdPartida, Partidas.Turno, Partidas.Finalizada FROM Partidas, UsuariosPartidas WHERE Partidas.IdPartida = UsuariosPartidas.IdPartida AND UsuariosPartidas.IdUsuario =" + IdUsuario;
                     rs = st.executeQuery(SQL);
@@ -62,41 +62,41 @@ public class Principal extends HttpServlet {
                     out.println("        <h1>Bienvenido</h1>");
                     out.println("        <p>Aquí podrá ver todas sus partidas iniciadas</p>");
                     out.println("                        <div class='user'>");
-                out.println("                    <header class='user__header'>");
-                out.println("                        <h1 class='user__title'>Inicie una nueva partida</h1>");
-                out.println("                    </header>");
-                out.println("                <form class='form' name='nueva' action='' method='POST' onsubmit='validar()'>");
-                out.println("                    <div class='form__group'>");
-                out.println("                        <input type='text' name='IDUSUARIO' class='form__input'>");
-                out.println("                    </div>");
-                out.println("                    <div class='form__group'>");
-                out.println("                        <input type='submit' value='Crear nueva partida' class='form__input'>");
-                out.println("                    </div>");
-                out.println("                </form>");
-                out.println("                </div>");
+                    out.println("                    <header class='user__header'>");
+                    out.println("                        <h1 class='user__title'>Inicie una nueva partida</h1>");
+                    out.println("                    </header>");
+                    out.println("                <form class='form' name='nueva' action='/sgti-trabajo/game' method='POST' onsubmit='validar()'>");
+                    out.println("                    <div class='form__group'>");
+                    out.println("                        <input type='text' name='IDUSUARIO' class='form__input'>");
+                    out.println("                    </div>");
+                    out.println("                    <div class='form__group'>");
+                    out.println("                        <input type='submit' value='Crear nueva partida' class='form__input'>");
+                    out.println("                    </div>");
+                    out.println("                </form>");
+                    out.println("                </div>");
                     out.println("        <div class='container'>");
                     while (!rs.next()) {
-                    if(rs.getString(3) == 1){
-                        out.println("            <div class='bloque' onclick='location.href=''>Partida finalizada </br>Id:"+rs.getString(1)+"</div>");
+                        if(rs.getString(3).equals("1")){
+                            out.println("            <div class='bloque' onclick='location.href=''>Partida finalizada </br>Id:"+rs.getString(1)+"</div>");
 
+                        }
+                        else if(rs.getString(2).equals(String.valueOf(IdUsuario))){  
+                            out.println("            <div class='bloque'>Su turno </br>Id:"+rs.getString(1));
+                            out.println("               <form method='POST' action=''>");
+                            out.println("                   <input type='hidden' value='"+rs.getString(1)+"' name='ID'>");
+                            out.println("                   <input type='submit' value='Seleccionar' class='form__input'>");
+                            out.println("               </form>");
+                            out.println("             </div>");
+                        }
+                        else{
+                            out.println("            <div class='bloque'>Turno del oponente </br>Id:"+rs.getString(1));
+                            out.println("               <form method='POST' action=''>");
+                            out.println("                   <input type='hidden' value='"+rs.getString(1)+"' name='ID'>");
+                            out.println("                   <input type='submit' value='Seleccionar' class='form__input'>");
+                            out.println("               </form>");
+                            out.println("             </div>");
+                        }
                     }
-                    else if(rs.getString(2) == IdUsuario){  
-                        out.println("            <div class='bloque'>Su turno </br>Id:"+rs.getString(1));
-                        out.println("               <form method='POST' action=''>");
-                        out.println("                   <input type='hidden' value='"+rs.getString(1)+"' name='ID'>");
-                        out.println("                   <input type='submit' value='Seleccionar' class='form__input'>");
-                        out.println("               </form>");
-                        out.println("             </div>");
-                    }
-                    else{
-                        out.println("            <div class='bloque'>Turno del oponente </br>Id:"+rs.getString(1));
-                        out.println("               <form method='POST' action=''>");
-                        out.println("                   <input type='hidden' value='"+rs.getString(1)"' name='ID'>");
-                        out.println("                   <input type='submit' value='Seleccionar' class='form__input'>");
-                        out.println("               </form>");
-                        out.println("             </div>");
-                    }
-                   	}
                     out.println("        </div>");
                     out.println("    </main>");
                     out.println("</body>");
