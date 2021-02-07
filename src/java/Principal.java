@@ -54,7 +54,7 @@ public class Principal extends HttpServlet {
                     out.println("        <nav class='main-header__nav'>");
                     out.println("            <ul class='main-header__item-list'>");
                     out.println("                <li class='main-header__item'><a class='active' href=''>Mis partidas</a></li>");
-                    out.println("                <li class='main-header__item'><a href=''>Mi cuenta</a></li>");
+                    out.println("                <li class='main-header__item'><form method='POST' action='/sgti-trabajo/cuenta'><button type='submit'>Mi cuenta</button></form></li>");
                     out.println("            </ul>");
                     out.println("        </nav>");
                     out.println("    </header>");

@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class Cuenta extends HttpServlet {
-    public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+    public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         Connection con;
         Statement st;
         ResultSet rs;
@@ -41,7 +41,7 @@ public class Cuenta extends HttpServlet {
                 out.println("    <header class='main-header'>");
                 out.println("        <nav class='main-header__nav'>");
                 out.println("            <ul class='main-header__item-list'>");
-                out.println("                <li class='main-header__item'><a href=''>Mis partidas</a></li>");
+                out.println("                <li class='main-header__item'><form method='POST' action='/sgti-trabajo/principal'><button type='submit'>Mis partidas</button></form></li>");
                 out.println("                <li class='main-header__item'><a class='active' href=''>Mi cuenta</a></li>");
                 out.println("            </ul>");
                 out.println("        </nav>");
@@ -57,6 +57,9 @@ public class Cuenta extends HttpServlet {
                 out.println("                </div>");
                 out.println("                <div class='form__group'>");
                 out.println("                    <span class='form__input'>Correo: " + rs.getString(3) + "</span>");
+                out.println("                </div>");
+                out.println("                <div class='form__group'>");
+                out.println("                    <span class='form__input'>Id: " + rs.getString(1) + "</span>");
                 out.println("                </div>");
                 out.println("            </div>");
                 out.println("            </div>");
