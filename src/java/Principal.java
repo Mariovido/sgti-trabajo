@@ -83,7 +83,7 @@ public class Principal extends HttpServlet {
                         else if(rs.getString(2).equals(String.valueOf(IdUsuario))){  
                             out.println("            <div class='bloque'>Su turno </br>Id:"+rs.getString(1));
                             out.println("               <form method='POST' action='/sgti-trabajo/game'>");
-                            out.println("                   <input type='hidden' value='"+rs.getString(1)+"' name='ID'>");
+                            out.println("                   <input type='hidden' value='"+rs.getString(1)+"' name='IDPARTIDA'>");
                             out.println("                   <input type='submit' value='Seleccionar' class='form__input'>");
                             out.println("               </form>");
                             out.println("             </div>");
@@ -91,7 +91,7 @@ public class Principal extends HttpServlet {
                         else{
                             out.println("            <div class='bloque'>Turno del oponente </br>Id:"+rs.getString(1));
                             out.println("               <form method='POST' action='/sgti-trabajo/game'>");
-                            out.println("                   <input type='hidden' value='"+rs.getString(1)+"' name='ID'>");
+                            out.println("                   <input type='hidden' value='"+rs.getString(1)+"' name='IDPARTIDA'>");
                             out.println("                   <input type='submit' value='Seleccionar' class='form__input'>");
                             out.println("               </form>");
                             out.println("             </div>");
