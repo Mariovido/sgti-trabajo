@@ -65,9 +65,9 @@ public class Principal extends HttpServlet {
                     out.println("                    <header class='user__header'>");
                     out.println("                        <h1 class='user__title'>Inicie una nueva partida</h1>");
                     out.println("                    </header>");
-                    out.println("                <form class='form' name='nueva' action='/sgti-trabajo/game' method='POST' onsubmit='validar()'>");
+                    out.println("                <form class='form' name='nueva' action='/sgti-trabajo/nuevapartida' method='POST' onsubmit='validar()'>");
                     out.println("                    <div class='form__group'>");
-                    out.println("                        <input type='text' name='IDUSUARIO' class='form__input'>");
+                    out.println("                        <input type='text' name='NICK' class='form__input' placeholder='nickname'>");
                     out.println("                    </div>");
                     out.println("                    <div class='form__group'>");
                     out.println("                        <input type='submit' value='Crear nueva partida' class='form__input'>");
