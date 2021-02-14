@@ -64,13 +64,13 @@
 </servlet-mapping>
 
 <servlet>
-<servlet-name>results</servlet-name>
-<description>Servlet de la página de los resultados del juego</description>
-<servlet-class>Results</servlet-class>
+<servlet-name>nuevaPartida</servlet-name>
+<description>Servlet que crea una nueva partida</description>
+<servlet-class>Nuevapartida</servlet-class>
 </servlet>
 <servlet-mapping>
-<servlet-name>results</servlet-name>
-<url-pattern>/game/results</url-pattern>
+<servlet-name>nuevaPartida</servlet-name>
+<url-pattern>/nuevaPartida</url-pattern>
 </servlet-mapping>
 
 <session-config>
