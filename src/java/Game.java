@@ -11,14 +11,13 @@ public class Game extends HttpServlet {
         String SQL, IdUsuario, IdPartida;
         PrintWriter out;
         
-        //Le tiene que llegar de alguna manera el IdPartida.
-        IdPartida=req.getParameter("IdPartida");
+        IdPartida=req.getParameter("IDPARTIDA"); //le llega de principal al clickar una partida
 
         out = res.getWriter();
         try {
             HttpSession sesion = req.getSession(false);
 
-            if(sesion!=null) {
+            if(sesion==null) {
                 out.close();
                 res.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");
             } else {
@@ -40,9 +39,9 @@ public class Game extends HttpServlet {
                 out.println("    <meta charset='UTF-8'>");
                 out.println("    <meta name='viewport' content='width=device-width, initial-scale=1.0'>");
                 out.println("    <title>Cuatro En Raya</title>");
-                out.println("    <link rel='stylesheet' href='resources/styles/main.css'>");
-                out.println("    <link rel='stylesheet' href='resources/styles/tabla.css'>");
-                out.println("    <script src='resources/js/game.js'></script>");
+                out.println("    <link rel='stylesheet' href='web/resources/styles/main.css'>");
+                out.println("    <link rel='stylesheet' href='web/resources/styles/tabla.css'>");
+                out.println("    <script src='web/resources/js/game.js'></script>");
                 out.println("</head>");
                 out.println("<body>");
                 out.println("    <header class='main-header'>");
@@ -58,9 +57,19 @@ public class Game extends HttpServlet {
                 out.println("            <span id='remoto'>Jugador2</span>");
                 out.println("        </div>");
                 out.println("    </br>");
-                out.println("        <table id='tablero'><tbody>");
-                //Aquí faltaría escribir el tablero.
-                out.println("        </tbody></table>");
+                //Tablero
+                out.println(" <table id='tablero'>");
+                out.println("   <tbody>");
+                for (int i=0; i<7; i++){
+                    out.println("<tr>");
+                    for (int j=0; j<7; j++){
+                        out.println("<td id='"+String.valueOf(i)+String.valueOf(j)+"' onclick='paint()'></td>");
+                    }
+                    out.println("</tr>");
+                }
+                out.println("   </tbody>");
+                out.println(" </table>");
+
                 out.println("    </main>");
                 out.println("</body>");
                 out.println("</html>");
