@@ -53,8 +53,8 @@ public class Game extends HttpServlet {
                 out.println("    </header>");
                 out.println("    <main>");
                 out.println("        <div id='jugadores'>");
-                out.println("            <span id='local'>Jugador1</span> vs.");
-                out.println("            <span id='remoto'>Jugador2</span>");
+                out.println("            <span id='local'>"+rs.getString(3)+"</span> vs.");
+                out.println("            <span id='remoto'>"+rs.getString(4)+"</span>");
                 out.println("        </div>");
                 out.println("    </br>");
                 //Tablero
