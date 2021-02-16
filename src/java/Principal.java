@@ -69,6 +69,7 @@ public class Principal extends HttpServlet {
                     out.println("                    <div class='form__group'>");
                     out.println("                        <input type='text' name='NICK' class='form__input' placeholder='nickname'>");
                     out.println("                    </div>");
+                    out.println("                        <input type='hidden' name='USER' value='"+nick+"'>");
                     out.println("                    <div class='form__group'>");
                     out.println("                        <input type='submit' value='Crear nueva partida' class='form__input'>");
                     out.println("                    </div>");

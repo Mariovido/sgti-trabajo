@@ -24,12 +24,14 @@ public class Nuevapartida extends HttpServlet {
                 st = con.createStatement();
                 SQL2 = "SELECT * FROM Usuarios Where Usuarios.Nick='"+nick+"'";
                 rs =st.executeQuery(SQL2);
+
+                RequestDispatcher rd = req.getRequestDispatcher("/principal");
                 
                 if (rs.next()) {
                     rs.close();
                     st.close();
                     con.close();
-                    res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/principal");
+                    rd.forward(req, res);
                 } else {
                     String estadoPartida = "";
                     int turno = IdUsuario;
@@ -50,7 +52,7 @@ public class Nuevapartida extends HttpServlet {
                     ps.close();
                     con.close();
 
-                    res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/principal"); 
+                    rd.forward(req, res); 
                 }
             } else {   
                 res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/inicio");
