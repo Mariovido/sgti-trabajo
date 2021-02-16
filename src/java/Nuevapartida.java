@@ -25,20 +25,20 @@ public class Nuevapartida extends HttpServlet {
                 SQL2 = "SELECT * FROM Usuarios Where Usuarios.Nick='"+nick+"'";
                 rs =st.executeQuery(SQL2);
                 
-                if (rs.next()) {
+                if (!rs.next()) {
                     rs.close();
                     st.close();
                     con.close();
-                    res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/principal");
+                   // res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/principal");
                 } else {
                     String estadoPartida = "";
                     int turno = IdUsuario;
                     byte finalizada = 0;
                     byte topeJugadores = 1;
                     int jugadorUno = IdUsuario;
-                    int jugadorDos = rs.getString(1);
+                    int jugadorDos = rs.getInt(1);
 
-                    SQL="INSERT INTO Usuarios (EstadoPartida, Turno, Finalizada, TopeJugadores, JugadorUno, JugadorDos) VALUES ('" + estadoPartida + "', '" +
+                    SQL="INSERT INTO Partidas (EstadoPartida, Turno, Finalizada, TopeJugadores, JugadorUno, JugadorDos) VALUES ('" + estadoPartida + "', '" +
                     turno + "', '" + finalizada + "', '" + topeJugadores + "', '" + jugadorUno + "', " + jugadorDos + ")";
                     ps = con.prepareStatement(SQL);
                     int result = ps.executeUpdate();
@@ -50,7 +50,7 @@ public class Nuevapartida extends HttpServlet {
                     ps.close();
                     con.close();
 
-                    res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/principal"); 
+                    //res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/principal"); 
                 }
             } else {   
                 res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/inicio");
