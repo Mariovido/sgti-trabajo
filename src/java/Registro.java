@@ -51,6 +51,9 @@ public class Registro extends HttpServlet {
                 // si hay un usuario se crea una variable de session
                 HttpSession misesion = req.getSession(true);
 
+                RequestDispatcher rd = getServletContext.getRequestDispatcher("/pricipal");
+                rd.forward(req, res);
+                /*
                 out = res.getWriter();
                 res.setContentType("text/html");
                 out.println("<HTML><BODY>");
@@ -59,9 +62,10 @@ public class Registro extends HttpServlet {
                 out.println("<INPUT TYPE = 'TEXT' NAME = 'USER' VALUE ='" + nick + "'>");
                 out.println("<INPUT TYPE = 'SUBMIT' VALUE = 'CONTINUAR'>");
                 out.println("</FORM></BODY></HTML>");
+                */
                 ps.close();
                 con.close();
-                out.close();
+                //out.close();
             }
         } catch(Exception e){
             System.out.println( "<div> Hay un error en el codigo </div>"+ e );

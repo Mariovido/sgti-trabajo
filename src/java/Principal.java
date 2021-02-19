@@ -76,7 +76,7 @@ public class Principal extends HttpServlet {
                     out.println("                </form>");
                     out.println("                </div>");
                     out.println("        <div class='container'>");
-                    while (!rs.next()) {
+                    while (rs.next()) {
                         if(rs.getString(3).equals("1")){
                             out.println("            <div class='bloque' onclick='location.href=''>Partida finalizada </br>Id:"+rs.getString(1)+"</div>");
 

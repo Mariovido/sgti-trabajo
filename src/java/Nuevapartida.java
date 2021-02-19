@@ -32,8 +32,8 @@ public class Nuevapartida extends HttpServlet {
                     st.close();
                     con.close();
 
+                    //enviamos la peticion a Principal
                     rd.forward(req, res);
-                   // res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/principal");
 
                 } else {
                     String estadoPartida = "";
@@ -55,8 +55,8 @@ public class Nuevapartida extends HttpServlet {
                     ps.close();
                     con.close();
 
+                    //enviamos la peticion a Principal
                     rd.forward(req, res); 
-                    //res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/principal"); 
                 }
             } else {   
                 res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/inicio");
