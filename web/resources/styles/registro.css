@@ -16,7 +16,7 @@
 .user__title {
   margin-bottom: -10px;
   font-weight: 500;
-  color: white;
+  color: #FFFAEE;
 }
 
 .form {
@@ -40,7 +40,11 @@
   font-weight: normal;
 }
 .form__input:focus {
-  background: #f7f7f7;
+  background: #FFFAEE;
+}
+
+.subm{
+  background: #fffaee;
 }
 
 .btn {
