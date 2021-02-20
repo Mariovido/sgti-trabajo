@@ -51,7 +51,7 @@ public class Registro extends HttpServlet {
                 // si hay un usuario se crea una variable de session
                 HttpSession misesion = req.getSession(true);
 
-                RequestDispatcher rd = getServletContext.getRequestDispatcher("/pricipal");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/principal");
                 rd.forward(req, res);
                 /*
                 out = res.getWriter();

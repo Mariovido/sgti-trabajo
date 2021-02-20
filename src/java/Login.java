@@ -32,9 +32,13 @@ public class Login extends HttpServlet {
                 // si hay un usuario se crea una variable de session
                 HttpSession misesion = req.getSession(true);
                 // y se redirige a la pantalla de registro de partidas iniciadas
-                RequestDispatcher rd = getServletContext.getRequestDispatcher("/pricipal");
+
+               /*RequestDispatcher rd = getServletContext().getRequestDispatcher("/principal");
                 rd.forward(req, res);
-                /*
+                
+             */
+                
+               
                 out = res.getWriter();
                 res.setContentType("text/html");
                 out.println("<HTML><BODY>");
@@ -43,8 +47,8 @@ public class Login extends HttpServlet {
                 out.println("<INPUT TYPE = 'TEXT' NAME = 'USER' VALUE ='" + user + "'>");
                 out.println("<INPUT TYPE = 'SUBMIT' VALUE = 'CONTINUAR'>");
                 out.println("</FORM></BODY></HTML>");
-                */
-                rs.close();
+                
+               rs.close();
                 st.close();
                 con.close();
                 //out.close();
