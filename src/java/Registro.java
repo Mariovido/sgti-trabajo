@@ -4,6 +4,62 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class Registro extends HttpServlet {
+    public void doGet(HttpServletRequest req, HttpServletResponse res) {
+        PrintWriter out;
+        out.println("<!DOCTYPE html>");
+out.println("<html lang='en'>");
+out.println("<head>");
+    out.println("<meta charset='UTF-8'>");
+    out.println("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
+    out.println("<title>Cuatro En Raya</title>");
+    out.println("<link rel='stylesheet' href='http://juegocraya.duckdns.org:8080/sgti-trabajo/web/resources/styles/main.css'> ");
+    out.println("<link rel='stylesheet' href='http://juegocraya.duckdns.org:8080/sgti-trabajo/web/resources/styles/registro.css'>");
+    out.println("<link rel='stylesheet' href='web/resources/styles/main.css'> ");
+    out.println("<link rel='stylesheet' href='web/resources/styles/registro.css'>");
+    out.println("<script src='web/resources/js/util.js'></script>");
+out.println("</head>");
+out.println("<body>");
+    out.println("<header class='main-header'>");
+        out.println("<nav class='main-header__nav'>");
+            out.println("<ul class='main-header__item-list'>");
+                out.println("<li class='main-header__item'><a class='active' href=''>Registrarse</a></li>");
+                out.println("<li class='main-header__item'><a href='/login'>Iniciar sesión</a></li>");
+            out.println("</ul>");
+        out.println("</nav>");
+    out.println("</header>");
+
+    out.println("<main>");
+        out.println("<div class='user'>");
+            out.println("<header class='user__header'>");
+                out.println("<img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg' alt='logo' />");
+                out.println("<h1 class='user__title'>Regístrese para poder jugar</h1>");
+            out.println("</header>");
+            out.println("<form name='formulario' class='form' action='http://juegocraya.duckdns.org:8080/sgti-trabajo/registro' method='POST' onsubmit='return validarRegistro()'>");
+                out.println("<div class='form__group'>");
+                    out.println("<input name='NAME' type='text' placeholder='Nombre' class='form__input' />");
+                out.println("</div>");
+
+                out.println("<div class='form__group'>");
+                    out.println("<input name='USER' type='text' placeholder='Usuario' class='form__input' />");
+                out.println("</div>");
+                
+                out.println("<div class='form__group'>");
+                   out.println("<input name='MAIL' type='email' placeholder='Email' class='form__input' />");
+                out.println("</div>");
+                
+                out.println("<div class='form__group'>");
+                    out.println("<input name='PASS' type='password' placeholder='Contraseña' class='form__input' />");
+                out.println("</div>");
+
+                out.println("<button class='btn' type='submit'>Registrarse</button>");
+            out.println("</form>");
+            out.println("</div>");
+    out.println("</main>");
+out.println("</body>");
+out.println("</html>");
+        out.close();
+    }
+
     public void doPost(HttpServletRequest req, HttpServletResponse res) {
         Connection con;
         Statement st;
