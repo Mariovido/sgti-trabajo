@@ -33,6 +33,7 @@ public class Game extends HttpServlet {
                 rs=st.executeQuery(SQL);
 
                 //HTML
+                res.setContentType("text/html");
                 out.println("<!DOCTYPE html>");
                 out.println("<html lang='en'>");
                 out.println("<head>");

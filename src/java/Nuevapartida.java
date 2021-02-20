@@ -25,7 +25,7 @@ public class Nuevapartida extends HttpServlet {
                 SQL2 = "SELECT * FROM Usuarios Where Usuarios.Nick='"+nick+"'";
                 rs =st.executeQuery(SQL2);
 
-                RequestDispatcher rd = getServletContext.getRequestDispatcher("/pricipal");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/pricipal");
                 
                 if (!rs.next()) {
                     rs.close();
