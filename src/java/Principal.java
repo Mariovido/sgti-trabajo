@@ -113,7 +113,7 @@ public class Principal extends HttpServlet {
                 res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/inicio");
             }
         } catch (Exception e){
-            System.out.println("<div> Error de Principal" + e + "</div>");
+            System.out.println("<div> Error " + e + "</div>");
         }
     }
 }
