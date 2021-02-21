@@ -79,7 +79,7 @@ public class Game extends HttpServlet {
                 out.println("$.ajax({");
                 out.println("url     : '/ajaxhandler',"); //aqui poner la url del ajaxhandler
                 out.println("method     : 'POST',");
-                out.println("data     : {COLUMNA : col },");
+                out.println("data     : {COLUMNA : col, PARTIDA : '"+IdPartida+"'},");
                 out.println("success    : paint()});");
                 out.println("});");
                 out.println("</script>");
