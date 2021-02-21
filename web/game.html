@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="resources/styles/main.css"> 
     <link rel="stylesheet" href="resources/styles/tabla.css"> 
     <script src="resources/js/game.js"></script>
+    <!--<script src="resources/js/async.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <header class="main-header">
@@ -16,7 +18,6 @@
             </ul>
         </nav>
     </header>
-
     <main>
         <div id="jugadores">
             <span id="local">Jugador1</span> vs.
@@ -96,6 +97,29 @@
             </tr>
         </tbody></table>
         <script>paintInit()</script>
+        <script>  
+            $(document).on("click", "td", function() { // Cuando hay un "click" en un td se ejecuta la siguiente funcion
+var id = $(this).attr('id');
+var col = id.charAt(1);
+$.ajax({
+url     : 'https://openclassrooms.com/en',
+method     : 'POST',
+data     : {COLUMNA : col },
+success    : paint()});
+});
+        </script>
+
+        <script>
+            function refresh(){
+                //refrescar tablero si el otro jugador ha jugado
+                //enviar aqui peticion asincrona
+                alert("refresco");
+            }
+
+            setInterval(function(){
+            refresh() // se refresca cada 5 segundos
+            }, 5000);
+        </script>
     </main>
 </body>
 </html>
