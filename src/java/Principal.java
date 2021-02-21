@@ -34,7 +34,7 @@ public class Principal extends HttpServlet {
                     // se ha comprobado que se recoge bien el IdUsuario
 
                     st = con.createStatement();
-                    SQL = "SELECT Partidas.IdPartida, Partidas.Turno, Partidas.Finalizada FROM Partidas, UsuariosPartidas WHERE Partidas.IdPartida = UsuariosPartidas.IdPartida AND UsuariosPartidas.IdUsuario =" + IdUsuario;
+                    SQL = "SELECT Partidas.IdPartida, Partidas.Turno, Partidas.Finalizada FROM Partidas, Usuariospartidas WHERE Partidas.IdPartida = Usuariospartidas.IdPartida AND Usuariospartidas.IdUsuario =" + IdUsuario;
                     rs = st.executeQuery(SQL);
 
                     //HTML
