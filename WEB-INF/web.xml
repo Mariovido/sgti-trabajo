@@ -73,6 +73,16 @@
 <url-pattern>/nuevaPartida</url-pattern>
 </servlet-mapping>
 
+<servlet>
+<servlet-name>ajaxhandler</servlet-name>
+<description>Servlet que maneja las peticiones de Ajax</description>
+<servlet-class>Ajaxhandler</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>ajaxhandler</servlet-name>
+<url-pattern>/ajaxhandler</url-pattern>
+</servlet-mapping>
+
 <session-config>
 <session-timeout>30</session-timeout>
 </session-config>
