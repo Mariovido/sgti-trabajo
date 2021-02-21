@@ -46,7 +46,7 @@ public class Game extends HttpServlet {
                     out.println("    <link rel='stylesheet' href='web/resources/styles/main.css'>");
                     out.println("    <link rel='stylesheet' href='web/resources/styles/tabla.css'>");
                     out.println("    <script src='web/resources/js/game.js'></script>");
-                    out.println("    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
+                    out.println("    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>");
                     out.println("    <script src='web/resources/js/async.js'></script>");
                     out.println("</head>");
                     out.println("<body>");
@@ -69,13 +69,23 @@ public class Game extends HttpServlet {
                     for (int i=0; i<7; i++){
                         out.println("<tr>");
                         for (int j=0; j<7; j++){
-                            out.println("<td id='"+String.valueOf(i)+String.valueOf(j)+"' onclick='paint()'></td>");
+                            out.println("<td id='"+String.valueOf(i)+String.valueOf(j)+"'></td>"); //quito onclick paint porq lo hara el jquery
                         }
                         out.println("</tr>");
                     }
                     out.println("   </tbody>");
                     out.println(" </table>");
-
+                    out.println("<script>  ");
+                    out.println("$(document).on('click', 'td', function() {"); // Cuando hay un "click" en un td se ejecuta la siguiente funcion
+                    out.println("var id = $(this).attr('id');");
+                    out.println("var col = id.charAt(1);");
+                    out.println("$.ajax({");
+                    out.println("url     : '/ajaxhandler',"); //aqui poner la url del ajaxhandler
+                    out.println("method     : 'POST',");
+                    out.println("data     : {COLUMNA : col, PARTIDA : '"+IdPartida+"'},");
+                    out.println("success    : paint()});");
+                    out.println("});");
+                    out.println("</script>");
                     out.println("    </main>");
                     out.println("</body>");
                     out.println("</html>");
@@ -86,7 +96,7 @@ public class Game extends HttpServlet {
                 }
             }
         } catch (Exception e){
-            out.println("<div> Error " + e + "</div>");
+            out.println("<div> Error de GAME " + e + "</div>");
         }
         out.close();
     }
