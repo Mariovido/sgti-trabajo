@@ -8,11 +8,12 @@ public class Game extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		try{
 			Statement st;
+			PreparedStatement ps;
 			ResultSet rs;
 			String SQL, SQL2;
 			String columna = req.getParameter("COLUMNA");
 			//sacar el id de partida
-			String idpartida = req.getParameter("PARTIDA");
+			String idPartida = req.getParameter("PARTIDA");
 			//sacar el userid de la sesion
 			HttpSession sesion = req.getSession(false);
 			int IdUsuario= (int) sesion.getAttribute("IdUsuario");
@@ -20,11 +21,12 @@ public class Game extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver");
         	con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
         	st = con.createStatement();
-			SQL="SELECT Partidas.Turno, Partidas.JugadorUno, Partidas.JugadorDos, Partidas.EstadoPartida FROM Partidas WHERE Partidas.IdPartida =" + IdPartida;
+			SQL="SELECT Partidas.Turno, Partidas.JugadorUno, Partidas.JugadorDos, Partidas.EstadoPartida FROM Partidas WHERE Partidas.IdPartida ='" + idPartida + "'";
 			rs = st.executeQuery(SQL);
 			int turno = rs.getInt(1);
 			int j1 = rs.getInt(2);
 			int j2 = rs.getInt(3);
+			int nextJ = j1;
 		//si es su turno, introducir la ficha que ha colocado en la base de datos
 			if(turno == IdUsuario){
 				//primero sacar el mapa y ver quien es quien y luego meter la ficha con el insert
@@ -33,23 +35,30 @@ public class Game extends HttpServlet {
 				boolean colocar1 = false;
 				if (IdUsuario == j1){
 					colocar1 = true;
+					nextJ = j2;
 				}
 				//si colocar1 == true, pondremos un 1, si no, un 2
 				//tenemos la columna en la que hay que ponerla que es String columna
-				String columnaClickada = tablero.substring(7*columna,7+7*columna); //columna clickada
+				//String columnaClickada = tablero.substring(7*columna,7+7*columna); //columna clickada
 				//bucle descendente para encontrar la ultima ficha colocada
-				for (int j=6; j>=0; j--){
-					if (columnaClickada.charAt(j) == "0"){ //cuando encuentre un 0, si colocar1 es true coloca un 1 si no, un 2
-						if (colocar1){
-							String columnaNueva = changeCharInPosition(j, '1',columnaClickada);
-						} else{
-							String columnaNueva = changeCharInPosition(j, '2',columnaClickada);
+				String tableroRes;
+					for (int j=6; j>=0; j--){
+						if (tablero.charAt(j+8*columna == "0"){ //cuando encuentre un 0, si colocar1 es true coloca un 1 si no, un 2
+							if (colocar1){
+								tableroRes = changeCharInPosition(j+8*columna, '1',tablero);
+							} else{
+								tableroRes = changeCharInPosition(j+8*columna, '2',tablero);
+							}
+							break;
 						}
-						//finalmente reintroducimos la columna en la matriz grande
-						//matrizSt=matrizSt.replaceAt(NCol*7+i,"1"); //esto es en js
-						break;
 					}
-				}
+				//guardar nuevo tablero (tableroRes) update
+				con.setAutoCommit(false);
+				SQL2="UPDATE Partidas SET EstadoPartida = '"+tableroRes+"', Turno = "+nextJ+" WHERE IdPartida ='"+idPartida+"'";
+				ps = con.prepareStatement(SQL2);
+            	int result = ps.executeUpdate();
+                con.commit();
+                con.setAutoCommit(true);
 			}
 		//cambiar el turno al otro jugador
 	}catch(Exception e){
@@ -68,10 +77,10 @@ public class Game extends HttpServlet {
 		int IdUsuario= (int) sesion.getAttribute("IdUsuario");
 		Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
-        String idpartida = req.getParameter("PARTIDA");
+        String idPartida = req.getParameter("PARTIDA");
         Statement st;
 		ResultSet rs;
-		SQL="SELECT Partidas.EstadoPartida, Partidas.Turno, Partidas.JugadorUno FROM Partidas WHERE Partidas.IdPartida =" + IdPartida;
+		SQL="SELECT Partidas.EstadoPartida, Partidas.Turno, Partidas.JugadorUno FROM Partidas WHERE Partidas.IdPartida ='" + idPartida+"'";
 		st = con.createStatement();
 		rs = st.executeQuery(SQL);
 		if (rs.next()){
