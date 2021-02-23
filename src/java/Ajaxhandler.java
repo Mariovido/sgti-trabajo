@@ -48,7 +48,7 @@ public class Ajaxhandler extends HttpServlet {
                     //bucle descendente para encontrar la ultima ficha colocada
                     String tableroRes;
                     for (int j=6; j>=0; j--){
-                        if (tablero.charAt(j+8*columnaInt == "0")){ //cuando encuentre un 0, si colocar1 es true coloca un 1 si no, un 2
+                        if (tablero.charAt(j+8*columnaInt) == '0'){ //cuando encuentre un 0, si colocar1 es true coloca un 1 si no, un 2
                             if (colocar1){
                                 tableroRes = changeCharInPosition(j+8*columnaInt, '1',tablero);
                             } else{
