@@ -54,16 +54,31 @@ public class Ajaxhandler extends HttpServlet {
                             } else{
                                 tableroRes = changeCharInPosition(j+8*columnaInt, '2',tablero);
                             }
+                            
+                            con.setAutoCommit(false);
+                                SQL2="UPDATE Partidas SET EstadoPartida = '"+tableroRes+"', Turno = "+nextJ+" WHERE IdPartida ="+idPartida;
+                                ps = con.prepareStatement(SQL2);
+                                int result = ps.executeUpdate();
+                                con.commit();
+                                con.setAutoCommit(true);
+                                
+                                ps.close();
                             break;
                         }
                     }
                     //guardar nuevo tablero (tableroRes) update
+                    /*
                     con.setAutoCommit(false);
                     SQL2="UPDATE Partidas SET EstadoPartida = '"+tableroRes+"', Turno = "+nextJ+" WHERE IdPartida ="+idPartida;
                     ps = con.prepareStatement(SQL2);
                     int result = ps.executeUpdate();
                     con.commit();
                     con.setAutoCommit(true);
+                    */
+                   
+                   rs.close();
+                   st.close();
+                   con.close();
                 }
             }
             //cambiar el turno al otro jugador
@@ -78,44 +93,51 @@ public class Ajaxhandler extends HttpServlet {
         Debe recibir el parametro PARTIDA que contiene el id de la partida.
         Busca en la base de datos el estado de la partida y lo envia de vuelta como json
          */
-        Connection con;
-        String SQL;
-        res.setContentType("application/json; charset=UTF-8"); //decimos que la respuesta es un json
-        HttpSession sesion = req.getSession(false);
-        int IdUsuario= (int) sesion.getAttribute("IdUsuario");
-        Class.forName("com.mysql.jdbc.Driver");
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
-        //sacar el id de partida
-        String numeroPartida = req.getParameter("PARTIDA");
-        // se pasa el idPartida a int para usarlo en la SQL
-        int idPartida = Integer.parseInt(numeroPartida);
-        Statement st;
-        ResultSet rs;
-        SQL="SELECT Partidas.EstadoPartida, Partidas.Turno, Partidas.JugadorUno FROM Partidas WHERE Partidas.IdPartida =" + idPartida;
-        st = con.createStatement();
-        rs = st.executeQuery(SQL);
-        if (rs.next()){
-            //sacamos el mapa del tablero
-            String tablero = rs.getString(1);
-            //sacamos de quien es el turno para enviarlo
-            boolean turnoCliente = false; 
-            int turno = rs.getInt(2);
-            if (turno == IdUsuario){
-                turnoCliente = true;
+        try{
+            Connection con;
+            String SQL;
+            res.setContentType("application/json; charset=UTF-8"); //decimos que la respuesta es un json
+            HttpSession sesion = req.getSession(false);
+            int IdUsuario= (int) sesion.getAttribute("IdUsuario");
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
+            //sacar el id de partida
+            String numeroPartida = req.getParameter("PARTIDA");
+            // se pasa el idPartida a int para usarlo en la SQL
+            int idPartida = Integer.parseInt(numeroPartida);
+            Statement st;
+            ResultSet rs;
+            SQL="SELECT Partidas.EstadoPartida, Partidas.Turno, Partidas.JugadorUno FROM Partidas WHERE Partidas.IdPartida =" + idPartida;
+            st = con.createStatement();
+            rs = st.executeQuery(SQL);
+            if (rs.next()){
+                //sacamos el mapa del tablero
+                String tablero = rs.getString(1);
+                //sacamos de quien es el turno para enviarlo
+                boolean turnoCliente = false; 
+                int turno = rs.getInt(2);
+                if (turno == IdUsuario){
+                    turnoCliente = true;
+                }
+                //indicamos quien es el j1, no hace falta saber quien es j2 porq es implicito que es el otro
+                String jugador1 = "contrincante"; 
+                int j1 = rs.getInt(3);
+                if (j1 == IdUsuario){
+                    jugador1 = "clientelocal";
+                }
+                //ahora formamos la respuesta, que esta compuesta por el string de 012, por el turno y por quien es cada unno
+                JSONObject json = new JSONObject();
+                json.put("tablero",tablero);
+                json.put("turno",turnoCliente);
+                json.put("j1",jugador1);
+                //enviamos el json
+                res.getWriter().println(json);
             }
-            //indicamos quien es el j1, no hace falta saber quien es j2 porq es implicito que es el otro
-            String jugador1 = "contrincante"; 
-            int j1 = rs.getInt(3);
-            if (j1 == IdUsuario){
-                jugador1 = "clientelocal";
-            }
-            //ahora formamos la respuesta, que esta compuesta por el string de 012, por el turno y por quien es cada unno
-            JSONObject json = new JSONObject();
-            json.put("tablero",tablero);
-            json.put("turno",turnoCliente);
-            json.put("j1",jugador1);
-            //enviamos el json
-            res.getWriter().println(json);
+            rs.close();
+            st.close();
+            con.close();
+        }catch(Exception e){
+            System.out.println("Error en ajaxhandler: "+e);
         }
     }
 

@@ -26,7 +26,7 @@ public class Nuevapartida extends HttpServlet {
                 rs =st.executeQuery(SQL2);
 
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/principal");
-                
+
                 if (!rs.next()) {
                     rs.close();
                     st.close();
@@ -42,7 +42,7 @@ public class Nuevapartida extends HttpServlet {
                     byte topeJugadores = 1;
                     int jugadorUno = IdUsuario;
                     int jugadorDos = rs.getInt(1);
-                    
+
                     con.setAutoCommit(false);
                     SQL="INSERT INTO Partidas (EstadoPartida, Turno, Finalizada, TopeJugadores, JugadorUno, JugadorDos) VALUES ('" + estadoPartida + "', '" +
                     turno + "', " + finalizada + ", " + topeJugadores + ", " + jugadorUno + ", " + jugadorDos + ")";
@@ -50,35 +50,40 @@ public class Nuevapartida extends HttpServlet {
                     int result = ps.executeUpdate();
                     con.commit();
                     con.setAutoCommit(true);
-                    
+
                     //recogemos el IDpartida creada anteriormente
                     st3=con.createStatement();
-                    SQL3= "SELECT * FROM Partidas";
+                    SQL3= "SELECT * FROM Partidas ORDER BY Partidas.IdPartida DESC";
                     rs3=st3.executeQuery(SQL3);
-                    int idPartida = rs.getInt(1);
-                                        
-                    //añadimos la relacion de jugador-partida de los dos jugadores
-                    int cero=0;
-                    con.setAutoCommit(false);
-                    SQL4= "INSERT INTO Usuariospartidas(IdUsuario, IdPartida) VALUES (" + jugadorUno + ", " + idPartida + ")";
-                    SQL5= "INSERT INTO Usuariospartidas(IdUsuario, IdPartida) VALUES (" + jugadorDos + ", " + idPartida + ")";
-                    // SQL6= "INSERTO INTO Partidasstats (IdPartida, TurnosJugados, Ganador, PuntosJugadorUno, PuntosJugadorDos) VALUES (" + idPartida + ", "+ cero +", "+ jugadorUno +", "+ cero +", "+ cero +")"; 
-                    ps4= con.prepareStatement(SQL4);
-                    ps5 = con.prepareStatement(SQL5);
-                    //ps6 = con.prepareStatement(SQL6);
-                    int result4 = ps4.executeUpdate();
-                    int result5 = ps5.executeUpdate();
-                    //int result6 = ps.executeUpdate();
-                    con.commit();
-                    con.setAutoCommit(true);
-                    
+                    if(rs3.next()){
+                       int idPartida = rs3.getInt(1);
+                       System.out.println("<div> Error de NUEVAPARTIDA el idPartida creado es " + idPartida+"</div>");
+
+                        //añadimos la relacion de jugador-partida de los dos jugadores
+                        int cero=0;
+                        con.setAutoCommit(false);
+                        SQL4= "INSERT INTO Usuariospartidas(IdUsuario, IdPartida) VALUES (" + jugadorUno + ", " + idPartida + ")";
+                        SQL5= "INSERT INTO Usuariospartidas(IdUsuario, IdPartida) VALUES (" + jugadorDos + ", " + idPartida + ")";
+                        // SQL6= "INSERTO INTO Partidasstats (IdPartida, TurnosJugados, Ganador, PuntosJugadorUno, PuntosJugadorDos) VALUES (" + idPartida + ", "+ cero +", "+ jugadorUno +", "+ cero +", "+ cero +")"; 
+                        ps4= con.prepareStatement(SQL4);
+                        ps5 = con.prepareStatement(SQL5);
+                        //ps6 = con.prepareStatement(SQL6);
+                        int result4 = ps4.executeUpdate();
+                        int result5 = ps5.executeUpdate();
+                        //int result6 = ps.executeUpdate();
+                        con.commit();
+                        con.setAutoCommit(true);
+
+                        ps4.close();
+                        ps5.close();
+                    }
+
                     rs.close();
                     rs3.close();
                     st.close();
                     st3.close();
                     ps.close();
-                    ps4.close();
-                    ps5.close();
+
                     //ps6.close();
                     con.close();
 
