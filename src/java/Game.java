@@ -34,19 +34,18 @@ public class Game extends HttpServlet {
                 SQL = "SELECT Partidas.EstadoPartida, Partidas.Turno, Partidas.JugadorUno, Partidas.JugadorDos FROM Partidas WHERE Partidas.IdPartida =" + IdPartida;
                 rs=st.executeQuery(SQL);
 
-                String SQLNicks = "SELECT Usuarios.Nick FROM Usuarios WHERE IdUsuario = '"+rs.getString(3)+"' OR IdUsuario = '"+rs.getString(4)+"'";
-                stnicks = con.createStatement();
-                rsnicks = stnicks.executeQuery(SQLNicks);
-
-                //* Consulta provisional hasta arreglar metodos
-                String SQLprov = "SELECT * FROM Usuarios WHERE IdUsuario =" +IdUsuario;
-                Statement stprov;
-                ResultSet rsprov;
-                stprov = con.createStatement();
-                rsprov = stprov.executeQuery(SQLprov);
-                
-
                 if(rs.next()){
+                    String SQLNicks = "SELECT Usuarios.Nick FROM Usuarios WHERE IdUsuario = '"+rs.getString(3)+"' OR IdUsuario = '"+rs.getString(4)+"'";
+                    stnicks = con.createStatement();
+                    rsnicks = stnicks.executeQuery(SQLNicks);
+
+                    //* Consulta provisional hasta arreglar metodos
+                    String SQLprov = "SELECT * FROM Usuarios WHERE IdUsuario =" +IdUsuario;
+                    Statement stprov;
+                    ResultSet rsprov;
+                    stprov = con.createStatement();
+                    rsprov = stprov.executeQuery(SQLprov);
+
                     //HTML
                     res.setContentType("text/html");
                     out.println("<!DOCTYPE html>");
@@ -66,7 +65,7 @@ public class Game extends HttpServlet {
                     out.println("        <nav class='main-header__nav'>");
                     out.println("            <ul class='main-header__item-list'>");
                     if(rsprov.next()){
-                    out.println(" <li class='main-header_item'><form method ='POST' action='/sgti-trabajo/principal'><input type='hidden' name='USER' value='"+rs.getString(2)+"'><button type ='submit'>Mis partidas </button></form></li>"); 
+                        out.println(" <li class='main-header_item'><form method ='POST' action='/sgti-trabajo/principal'><input type='hidden' name='USER' value='"+rs.getString(2)+"'><button type ='submit'>Mis partidas </button></form></li>"); 
                     }   
                     out.println("            </ul>");
                     out.println("        </nav>");
@@ -74,10 +73,10 @@ public class Game extends HttpServlet {
                     out.println("    <main>");
                     out.println("        <div id='jugadores'>");
                     if(rsnicks.next()){
-                    out.println("            <span id='local'>"+rsnicks.getString(1)+"</span> vs.");
+                        out.println("            <span id='local'>"+rsnicks.getString(1)+"</span> vs.");
                     }
                     if(rsnicks.next()){
-                    out.println("            <span id='remoto'>"+rsnicks.getString(1)+"</span>");
+                        out.println("            <span id='remoto'>"+rsnicks.getString(1)+"</span>");
                     }
                     out.println("        </div>");
                     out.println("    </br>");
@@ -109,6 +108,10 @@ public class Game extends HttpServlet {
                     out.println("</html>");
 
                     rs.close();
+                    rsnicks.close();
+                    rsprov.close();
+                    stnicks.close();
+                    stprov.close();
                     st.close();
                     con.close();
                 }
