@@ -38,6 +38,14 @@ public class Game extends HttpServlet {
                 stnicks = con.createStatement();
                 rsnicks = stnicks.executeQuery(SQLNicks);
 
+                //* Consulta provisional hasta arreglar metodos
+                String SQLprov = "SELECT * FROM Usuarios WHERE IdUsuario =" +IdUsuario;
+                Statement stprov;
+                ResultSet rsprov;
+                stprov = con.createStatement();
+                rsprov = stprov.executeQuery(SQLprov);
+                
+
                 if(rs.next()){
                     //HTML
                     res.setContentType("text/html");
@@ -57,7 +65,9 @@ public class Game extends HttpServlet {
                     out.println("    <header class='main-header'>");
                     out.println("        <nav class='main-header__nav'>");
                     out.println("            <ul class='main-header__item-list'>");
-                    out.println("                <li class='main-header__item'><a href='/stgi-trabajo/principal'>Mis partidas</a></li>");
+                    if(rsprov.next()){
+                    out.println(" <li class='main-header_item'><form method ='POST' action='/sgti-trabajo/principal'><input type='hidden' name='USER' value='"+rs.getString(2)+"'><button type ='submit'>Mis partidas </button></form></li>"); 
+                    }   
                     out.println("            </ul>");
                     out.println("        </nav>");
                     out.println("    </header>");
