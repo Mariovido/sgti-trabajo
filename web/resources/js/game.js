@@ -19,9 +19,10 @@ String.prototype.replaceAt = function(index, replacement) {
     return this.substr(0, index) + replacement + this.substr(index + replacement.length);
 }
 
-function paintInit(){
+function paintInit(matriz){
     for (var j=0; j<7; j++){
-        col = matrizSt.substring(7*j,7+7*j);
+        //col = matrizSt.substring(7*j,7+7*j);
+        col = matriz.substring(7*j,7+7*j);
         for (var i = 0; i<7; i++){
             if(col.charAt(i) == "1"){
                 document.getElementById(i.toString()+j.toString()).className = "j1";

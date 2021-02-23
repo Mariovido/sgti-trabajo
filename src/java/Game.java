@@ -6,8 +6,8 @@ import javax.servlet.http.*;
 public class Game extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         Connection con;
-        Statement st;
-        ResultSet rs;
+        Statement st, stnicks;
+        ResultSet rs, rsnicks;
         String SQL;
         int IdUsuario, IdPartida;
         PrintWriter out;
@@ -34,6 +34,10 @@ public class Game extends HttpServlet {
                 SQL = "SELECT Partidas.EstadoPartida, Partidas.Turno, Partidas.JugadorUno, Partidas.JugadorDos FROM Partidas WHERE Partidas.IdPartida =" + IdPartida;
                 rs=st.executeQuery(SQL);
 
+                String SQLNicks = "SELECT Usuarios.Nick FROM Usuarios WHERE IdUsuario = '"+rs.getString(3)+"' OR IdUsuario = '"+rs.getString(4)+"'";
+                stnicks = con.createStatement();
+                rsnicks = stnicks.executeQuery(SQLNicks);
+
                 if(rs.next()){
                     //HTML
                     res.setContentType("text/html");
@@ -47,7 +51,7 @@ public class Game extends HttpServlet {
                     out.println("    <link rel='stylesheet' href='web/resources/styles/tabla.css'>");
                     out.println("    <script src='web/resources/js/game.js'></script>");
                     out.println("    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>");
-                   // out.println("    <script src='web/resources/js/async.js'></script>");
+                    out.println("    <script src='web/resources/js/async.js'></script>");
                     out.println("</head>");
                     out.println("<body>");
                     out.println("    <header class='main-header'>");
@@ -59,8 +63,12 @@ public class Game extends HttpServlet {
                     out.println("    </header>");
                     out.println("    <main>");
                     out.println("        <div id='jugadores'>");
-                    out.println("            <span id='local'>"+rs.getString(3)+"</span> vs.");
-                    out.println("            <span id='remoto'>"+rs.getString(4)+"</span>");
+                    if(rsnicks.next()){
+                    out.println("            <span id='local'>"+rsnicks.getString(1)+"</span> vs.");
+                    }
+                    if(rsnicks.next()){
+                    out.println("            <span id='remoto'>"+rsnicks.getString(1)+"</span>");
+                    }
                     out.println("        </div>");
                     out.println("    </br>");
                     //Tablero

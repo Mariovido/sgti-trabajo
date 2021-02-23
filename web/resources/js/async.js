@@ -7,8 +7,12 @@ success    : refrescaTablero()});
 alert("refresco");
 }
 
-modificaTablero(){
+getTablero();
 
+function refrescaTablero(matrizjson){
+    //sacar param
+    var matriz = JSON.stringify(matrizjson);
+    paintInit(matriz);
 }
 
 setInterval(function(){
