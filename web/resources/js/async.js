@@ -1,11 +1,9 @@
-function refresh(){ 
-var id = $(this).attr('id');
-var col = id.charAt(1);
+function getTablero(){ 
 $.ajax({
 url     : '/ajaxhandler',
 method     : 'GET',
 data     : {PARTIDA : idpartida },
-success    : modificaTablero()});
+success    : refrescaTablero()});
 alert("refresco");
 }
 
@@ -14,5 +12,5 @@ modificaTablero(){
 }
 
 setInterval(function(){
-refresh() // se refresca cada 5 segundos
+getTablero() // se refresca cada 5 segundos
 }, 5000);

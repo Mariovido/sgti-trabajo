@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import org.json.*;
 
-public class Game extends HttpServlet {
+public class AjaxHandler extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		try{
 			Statement st;
