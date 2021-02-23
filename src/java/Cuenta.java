@@ -65,7 +65,7 @@ public class Cuenta extends HttpServlet {
                     out.println("                    <span class='form__input'>Correo: " + rs.getString(3) + "</span>");
                     out.println("                </div>");
                     out.println("                <div class='form__group'>");
-                    out.println("                    <span class='form__input'>Id: " + rs.getString(1) + "</span>");
+                    out.println("                    <span class='form__input'>Nick: " + rs.getString(2) + "</span>");
                     out.println("                </div>");
                     out.println("            </div>");
                     out.println("            </div>");
