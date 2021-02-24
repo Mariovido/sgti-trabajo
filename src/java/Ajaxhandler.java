@@ -8,10 +8,10 @@ public class Ajaxhandler extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         try{
             Connection con;
-            Statement st;
-            PreparedStatement ps;
-            ResultSet rs;
-            String SQL, SQL2;
+            Statement st, st4;
+            PreparedStatement ps, ps3;
+            ResultSet rs,rs4;
+            String SQL, SQL2, SQL3, SQL4;
             String columna = req.getParameter("COLUMNA");
             int columnaInt = Integer.parseInt(columna);
             //sacar el id de partida
@@ -33,6 +33,9 @@ public class Ajaxhandler extends HttpServlet {
                 int j2 = rs.getInt(3);
                 int nextJ = j1;
                 //si es su turno, introducir la ficha que ha colocado en la base de datos
+
+                //variables para la puntuacion
+
                 if(turno == IdUsuario){
                     //primero sacar el mapa y ver quien es quien y luego meter la ficha con el insert
                     String tablero = rs.getString(4);
@@ -56,20 +59,51 @@ public class Ajaxhandler extends HttpServlet {
                                 tableroRes = changeCharInPosition(j+8*columnaInt, '2',tablero);
                             }
 
-                            /*
-                                Falta actualizar la bbdd con la nueva puntuacion
-                            */
-                            int puntuacion = 0; // Sacar de la BBDD, (tablaStats), dependiendo del jugador
+                            int puntuacion;
+                            int cero =0;
+                            // sacamos de la bbdd los datos de la partida : puntos j1 y j2 turnos ...
+                            st4= con.createStatement();
+                            SQL4 ="SELECT Partidastats.PuntosJugadorUno, Partidastats.PuntosJugadorDos Partidastats.TurnosJugados FROM Partidastats";
+                            rs4 = st4.executeQuery(SQL4);
+                            rs4.next();
+                            int turnosJugados = rs.getInt(3); // sacamos los turnos jugados 
+                            turnosJugados = turnosJugados +1; // sumamos un turno mas 
+
+                            // dependiendo de quien este jugando, el valor de puntuacion sera del jugadorUno o jugadorDos
+                            if (j1 ==turno){// Sacar de la BBDD, (tablaStats), dependiendo del jugador
+                                puntuacion = rs4.getInt(1) ; 
+                            }else{
+                                puntuacion = rs4.getInt(2);
+                            }
+
                             puntuacion = getPuntuacion(puntuacion, tableroRes, j, columnaInt, colocar1); // Actualizar la BBDD.
-                            
-                            con.setAutoCommit(false);
-                                SQL2="UPDATE Partidas SET EstadoPartida = '"+tableroRes+"', Turno = "+nextJ+" WHERE IdPartida ="+idPartida;
-                                ps = con.prepareStatement(SQL2);
-                                int result = ps.executeUpdate();
-                                con.commit();
+                            if(j1 ==turno){// se actualiza la bbdd dependiendo si es el turno del j1 O j2
+                                int puntJ2 = rs4.getInt(2);
+                                con.setAutoCommit(false);
+                                SQL3= "INSERT Partidastats (TurnosJugados, Ganador, PuntosJugadorUno, PuntosJugadorDos) VALUES"+
+                                "(" + turnosJugados + ", " + cero + ", " + puntuacion + ", " + puntJ2 +")";
+                                ps3= con.prepareStatement(SQL3);
+                                int result3 = ps3.executeUpdate();
+                                con.setAutoCommit(true);
+                            }else{
+                                int puntJ1 = rs4.getInt(1);
+                                con.setAutoCommit(false);
+                                SQL3= "INSERT Partidastats (TurnosJugados, Ganador, PuntosJugadorUno, PuntosJugadorDos) VALUES"+
+                                "(" + turnosJugados + ", " + cero + ", " + puntJ1 + ", " + puntuacion + ")";
+                                ps3= con.prepareStatement(SQL3);
+                                int result3 = ps3.executeUpdate();
                                 con.setAutoCommit(true);
                                 
-                                ps.close();
+                            }
+                            
+                            con.setAutoCommit(false);
+                            SQL2="UPDATE Partidas SET EstadoPartida = '"+tableroRes+"', Turno = "+nextJ+" WHERE IdPartida ="+idPartida;
+                            ps = con.prepareStatement(SQL2);
+                            int result = ps.executeUpdate();
+                            con.commit();
+                            con.setAutoCommit(true);
+
+                            ps.close();
                             break;
                         }
                     }
@@ -149,7 +183,7 @@ public class Ajaxhandler extends HttpServlet {
             jugador = 1;
         }
         int posicion = fila + 8*columna;
-        int puntuacionSumada;
+        int puntuacionSumada=0;
 
         if (estadoPartida.charAt(posicion + 9) == jugador) {
             puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_LEFT");
@@ -180,21 +214,21 @@ public class Ajaxhandler extends HttpServlet {
         int sumaPosicion = 0;
         switch(direccion) {
             case "UP_LEFT": sumaPosicion = 9; 
-            	break;
+            break;
             case "LEFT": sumaPosicion = 1;
-            	break;
+            break;
             case "DOWN_LEFT": sumaPosicion = -9;
-            	break;
+            break;
             case "DOWN": sumaPosicion = -8;
-            	break;
+            break;
             case "DOWN_RIGHT": sumaPosicion = -9;
-            	break;
+            break;
             case "RIGHT": sumaPosicion = -1;
-            	break;
+            break;
             case "UP_RIGHT": sumaPosicion = 9;
-            	break;
+            break;
             default: sumaPosicion = sumaPosicion;
-            	break;
+            break;
         }
         while(estadoPartida.charAt(posicion + sumaPosicion) == jugador) {
             puntuacion++;

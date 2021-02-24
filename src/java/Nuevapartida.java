@@ -7,9 +7,9 @@ public class Nuevapartida extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res) {
         Connection con;
         PrintWriter out;
-        String SQL, SQL2,SQL3,SQL4,SQL5,SQL6;
+        String SQL, SQL2,SQL3,SQL4,SQL5,SQL6,SQL7;
         Statement st,st3;
-        PreparedStatement ps,ps4,ps5,ps6;
+        PreparedStatement ps,ps4,ps5,ps6,ps7;
         ResultSet rs,rs3;
 
         try{
@@ -64,13 +64,13 @@ public class Nuevapartida extends HttpServlet {
                         con.setAutoCommit(false);
                         SQL4= "INSERT INTO Usuariospartidas(IdUsuario, IdPartida) VALUES (" + jugadorUno + ", " + idPartida + ")";
                         SQL5= "INSERT INTO Usuariospartidas(IdUsuario, IdPartida) VALUES (" + jugadorDos + ", " + idPartida + ")";
-                        // SQL6= "INSERTO INTO Partidasstats (IdPartida, TurnosJugados, Ganador, PuntosJugadorUno, PuntosJugadorDos) VALUES (" + idPartida + ", "+ cero +", "+ jugadorUno +", "+ cero +", "+ cero +")"; 
+                        SQL6= "INSERT INTO Partidastats (IdPartida, TurnosJugados, Ganador, PuntosJugadorUno, PuntosJugadorDos) VALUES (" + idPartida + ", "+ cero +", "+ jugadorUno +", "+ cero +", "+ cero +")"; 
                         ps4= con.prepareStatement(SQL4);
                         ps5 = con.prepareStatement(SQL5);
-                        //ps6 = con.prepareStatement(SQL6);
+                        ps6 = con.prepareStatement(SQL6);
                         int result4 = ps4.executeUpdate();
                         int result5 = ps5.executeUpdate();
-                        //int result6 = ps.executeUpdate();
+                        int result6 = ps6.executeUpdate();
                         con.commit();
                         con.setAutoCommit(true);
 

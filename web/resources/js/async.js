@@ -3,7 +3,7 @@ $.ajax({
 url     : '/ajaxhandler',
 method     : 'GET',
 data     : {PARTIDA : idpartida },
-success    : refrescaTablero()});
+success    : refrescaTablero(matrizjson)});
 alert("refresco");
 }
 
