@@ -56,8 +56,11 @@ public class Ajaxhandler extends HttpServlet {
                                 tableroRes = changeCharInPosition(j+8*columnaInt, '2',tablero);
                             }
 
+                            /*
+                                Falta actualizar la bbdd con la nueva puntuacion
+                            */
                             int puntuacion = 0; // Sacar de la BBDD, (tablaStats), dependiendo del jugador
-                            puntuacion = getPuntuacion(puntuacion, tablero, j, columnaInt, colocar1); // Actualizar la BBDD.
+                            puntuacion = getPuntuacion(puntuacion, tableroRes, j, columnaInt, colocar1); // Actualizar la BBDD.
                             
                             con.setAutoCommit(false);
                                 SQL2="UPDATE Partidas SET EstadoPartida = '"+tableroRes+"', Turno = "+nextJ+" WHERE IdPartida ="+idPartida;
@@ -70,22 +73,11 @@ public class Ajaxhandler extends HttpServlet {
                             break;
                         }
                     }
-                    //guardar nuevo tablero (tableroRes) update
-                    /*
-                    con.setAutoCommit(false);
-                    SQL2="UPDATE Partidas SET EstadoPartida = '"+tableroRes+"', Turno = "+nextJ+" WHERE IdPartida ="+idPartida;
-                    ps = con.prepareStatement(SQL2);
-                    int result = ps.executeUpdate();
-                    con.commit();
-                    con.setAutoCommit(true);
-                    */
-                   
-                   rs.close();
-                   st.close();
-                   con.close();
                 }
             }
-            //cambiar el turno al otro jugador
+            rs.close();
+            st.close();
+            con.close();
         }catch(Exception e){
             System.out.println("Error en ajaxhandler: "+e);
         }
@@ -151,7 +143,7 @@ public class Ajaxhandler extends HttpServlet {
         return new String(charArray);
     }
 
-    public int getPuntuacion(int puntuacion, String estadoPartida, int fila, int columna, boolean colocar1) {
+    public int getPuntuacion(int puntuacion, String estadoPartida, int fila, int columna, boolean colocar1) { 
         int jugador = 2;
         if (colocar1) {
             jugador = 1;
@@ -187,14 +179,22 @@ public class Ajaxhandler extends HttpServlet {
         int puntuacion = 0;
         int sumaPosicion = 0;
         switch(direccion) {
-            case "UP_LEFT": sumaPosicion = 9;
+            case "UP_LEFT": sumaPosicion = 9; 
+            	break;
             case "LEFT": sumaPosicion = 1;
+            	break;
             case "DOWN_LEFT": sumaPosicion = -9;
+            	break;
             case "DOWN": sumaPosicion = -8;
+            	break;
             case "DOWN_RIGHT": sumaPosicion = -9;
+            	break;
             case "RIGHT": sumaPosicion = -1;
+            	break;
             case "UP_RIGHT": sumaPosicion = 9;
+            	break;
             default: sumaPosicion = sumaPosicion;
+            	break;
         }
         while(estadoPartida.charAt(posicion + sumaPosicion) == jugador) {
             puntuacion++;
