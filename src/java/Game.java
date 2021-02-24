@@ -58,6 +58,7 @@ public class Game extends HttpServlet {
                     out.println("    <link rel='stylesheet' href='web/resources/styles/tabla.css'>");
                     out.println("    <script src='web/resources/js/game.js'></script>");
                     out.println("    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>");
+                    out.println("    <script>var idpartida = '"+IdPartida+"'</script>");
                     out.println("    <script src='web/resources/js/async.js'></script>");
                     out.println("</head>");
                     out.println("<body>");
