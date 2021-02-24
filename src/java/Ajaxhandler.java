@@ -36,6 +36,7 @@ public class Ajaxhandler extends HttpServlet {
                 if(turno == IdUsuario){
                     //primero sacar el mapa y ver quien es quien y luego meter la ficha con el insert
                     String tablero = rs.getString(4);
+
                     //ahora ver si colocar un 1 o un 2
                     boolean colocar1 = false;
                     if (IdUsuario == j1){
@@ -54,6 +55,9 @@ public class Ajaxhandler extends HttpServlet {
                             } else{
                                 tableroRes = changeCharInPosition(j+8*columnaInt, '2',tablero);
                             }
+
+                            int puntuacion = 0; // Sacar de la BBDD, (tablaStats), dependiendo del jugador
+                            puntuacion = getPuntuacion(puntuacion, tablero, j, columnaInt, colocar1); // Actualizar la BBDD.
                             
                             con.setAutoCommit(false);
                                 SQL2="UPDATE Partidas SET EstadoPartida = '"+tableroRes+"', Turno = "+nextJ+" WHERE IdPartida ="+idPartida;
@@ -145,5 +149,57 @@ public class Ajaxhandler extends HttpServlet {
         char[] charArray = str.toCharArray();
         charArray[position] = ch;
         return new String(charArray);
+    }
+
+    public int getPuntuacion(int puntuacion, String estadoPartida, int fila, int columna, boolean colocar1) {
+        int jugador = 2;
+        if (colocar1) {
+            jugador = 1;
+        }
+        int posicion = fila + 8*columna;
+        int puntuacionSumada;
+
+        if (estadoPartida.charAt(posicion + 9) == jugador) {
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_LEFT");
+        }
+        if (estadoPartida.charAt(posicion + 1) == jugador) {
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "LEFT");
+        }
+        if (estadoPartida.charAt(posicion - 9) == jugador) {
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_LEFT");
+        }
+        if (estadoPartida.charAt(posicion - 8) == jugador) {
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN");
+        }
+        if (estadoPartida.charAt(posicion - 9) == jugador) {
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_RIGHT");
+        }
+        if (estadoPartida.charAt(posicion - 1) == jugador) {
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "RIGHT");
+        }
+        if (estadoPartida.charAt(posicion + 9) == jugador) {
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_RIGHT");
+        }
+        return puntuacion + puntuacionSumada;
+    }
+
+    public int sigueRastro(String estadoPartida, int posicion, int jugador, String direccion) {
+        int puntuacion = 0;
+        int sumaPosicion = 0;
+        switch(direccion) {
+            case "UP_LEFT": sumaPosicion = 9;
+            case "LEFT": sumaPosicion = 1;
+            case "DOWN_LEFT": sumaPosicion = -9;
+            case "DOWN": sumaPosicion = -8;
+            case "DOWN_RIGHT": sumaPosicion = -9;
+            case "RIGHT": sumaPosicion = -1;
+            case "UP_RIGHT": sumaPosicion = 9;
+            default: sumaPosicion = sumaPosicion;
+        }
+        while(estadoPartida.charAt(posicion + sumaPosicion) == jugador) {
+            puntuacion++;
+            posicion += sumaPosicion;
+        }
+        return puntuacion;
     }
 }
