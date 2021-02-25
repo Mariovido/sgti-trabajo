@@ -4,12 +4,15 @@ url     : '/sgti-trabajo/ajaxhandler',
 method     : 'GET',
 data     : {PARTIDA : idpartida },
 success    : function(response){
-    var matriz = JSON.stringify(response);
+    let res = JSON.parse(JSON.stringify(response));
+    let matriz = res.tablero;
     paintInit(matriz);
+    turno = res.turno;
 }
 });
 }
 
+var turno = false;
 getTablero();
 
 /*

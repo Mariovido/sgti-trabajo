@@ -5,7 +5,7 @@ import javax.servlet.http.*;
 import org.json.*;
 
 public class Ajaxhandler extends HttpServlet {
-    public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+    public void doPost(HttpServletRequest req, HttpServletResponse res) {
         try{
             Connection con;
             Statement st, st4;
@@ -77,7 +77,7 @@ public class Ajaxhandler extends HttpServlet {
                                 puntuacion = rs4.getInt(2);
                             }
 
-                            puntuacion = getPuntuacion(puntuacion, tableroRes, j, columnaInt, colocar1); // Actualizar la BBDD.
+                            //puntuacion = getPuntuacion(puntuacion, tableroRes, j, columnaInt, colocar1); // Actualizar la BBDD.
                             if(j1 ==turno){// se actualiza la bbdd dependiendo si es el turno del j1 O j2
                                 //int puntJ2 = rs4.getInt(2);
                                 con.setAutoCommit(false);
@@ -85,6 +85,7 @@ public class Ajaxhandler extends HttpServlet {
                                 ps3= con.prepareStatement(SQL3);
                                 int result3 = ps3.executeUpdate();
                                 con.setAutoCommit(true);
+                                ps3.close();
                             }else{
                                 //int puntJ1 = rs4.getInt(1);
                                 con.setAutoCommit(false);
@@ -92,9 +93,10 @@ public class Ajaxhandler extends HttpServlet {
                                 ps3= con.prepareStatement(SQL3);
                                 int result3 = ps3.executeUpdate();
                                 con.setAutoCommit(true);
-                                
+                                ps3.close();
+
                             }
-                            
+
                             con.setAutoCommit(false);
                             SQL2="UPDATE Partidas SET EstadoPartida = '"+tableroRes+"', Turno = "+nextJ+" WHERE Partidas.IdPartida ="+idPartida;
                             ps = con.prepareStatement(SQL2);
@@ -102,7 +104,9 @@ public class Ajaxhandler extends HttpServlet {
                             con.commit();
                             con.setAutoCommit(true);
 
+                            rs4.close();
                             ps.close();
+                            st4.close();
                             break;
                         }
                     }
@@ -116,7 +120,7 @@ public class Ajaxhandler extends HttpServlet {
         }
     }
 
-    public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+    public void doGet(HttpServletRequest req, HttpServletResponse res)  {
         //GET 
         /*
         Debe recibir el parametro PARTIDA que contiene el id de la partida.
@@ -184,32 +188,39 @@ public class Ajaxhandler extends HttpServlet {
 
     public int getPuntuacion(int puntuacion, String estadoPartida, int fila, int columna, boolean colocar1) { 
         int jugador = 2;
+
         if (colocar1) {
             jugador = 1;
         }
         int posicion = fila + 8*columna;
         int puntuacionSumada=0;
+        int longitudTablero = estadoPartida.length();
 
-        if (estadoPartida.charAt(posicion + 9) == jugador) {
-            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_LEFT");
+        if(longitudTablero > posicion + 9 ){
+            if (estadoPartida.charAt(posicion + 9) == jugador) {
+                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_LEFT");
+            }
+            if (estadoPartida.charAt(posicion + 9) == jugador) {
+                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_RIGHT");
+            }
+            if (estadoPartida.charAt(posicion + 1) == jugador) {
+                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "LEFT");
+            }
         }
-        if (estadoPartida.charAt(posicion + 1) == jugador) {
-            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "LEFT");
-        }
-        if (estadoPartida.charAt(posicion - 9) == jugador) {
-            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_LEFT");
-        }
-        if (estadoPartida.charAt(posicion - 8) == jugador) {
-            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN");
-        }
-        if (estadoPartida.charAt(posicion - 9) == jugador) {
-            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_RIGHT");
-        }
-        if (estadoPartida.charAt(posicion - 1) == jugador) {
-            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "RIGHT");
-        }
-        if (estadoPartida.charAt(posicion + 9) == jugador) {
-            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_RIGHT");
+
+        if( posicion - 9 >= 0 ){
+            if (estadoPartida.charAt(posicion - 9) == jugador) {
+                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_LEFT");
+            }
+            if (estadoPartida.charAt(posicion - 8) == jugador) {
+                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN");
+            }
+            if (estadoPartida.charAt(posicion - 9) == jugador) {
+                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_RIGHT");
+            }
+            if (estadoPartida.charAt(posicion - 1) == jugador) {
+                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "RIGHT");
+            }
         }
         return puntuacion + puntuacionSumada;
     }
@@ -235,9 +246,14 @@ public class Ajaxhandler extends HttpServlet {
             default: sumaPosicion = sumaPosicion;
             break;
         }
-        while(estadoPartida.charAt(posicion + sumaPosicion) == jugador) {
-            puntuacion++;
-            posicion += sumaPosicion;
+        
+
+        int longitudTablero = estadoPartida.length();
+        while((posicion + sumaPosicion) >= 0 && (posicion + sumaPosicion) < longitudTablero) {
+            if(estadoPartida.charAt(posicion + sumaPosicion) == jugador){
+                puntuacion++;
+                posicion += sumaPosicion;
+            }
         }
         return puntuacion;
     }
