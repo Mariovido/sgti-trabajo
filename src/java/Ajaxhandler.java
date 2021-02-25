@@ -158,7 +158,7 @@ public class Ajaxhandler extends HttpServlet {
                 json.put("turno",turnoCliente);
                 json.put("j1",jugador1);
 
-                PrintWriter out = response.getWriter();
+                PrintWriter out = res.getWriter();
                 //decimos que la respuesta es un json
                 res.setContentType("application/json"); 
                 res.setCharacterEncoding("UTF-8");

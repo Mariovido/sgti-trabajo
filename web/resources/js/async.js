@@ -1,6 +1,6 @@
 function getTablero(){ 
 $.ajax({
-url     : '/ajaxhandler',
+url     : '/sgti-trabajo/ajaxhandler',
 method     : 'GET',
 data     : {PARTIDA : idpartida },
 success    : function(response){
