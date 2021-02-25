@@ -78,18 +78,16 @@ public class Ajaxhandler extends HttpServlet {
 
                             puntuacion = getPuntuacion(puntuacion, tableroRes, j, columnaInt, colocar1); // Actualizar la BBDD.
                             if(j1 ==turno){// se actualiza la bbdd dependiendo si es el turno del j1 O j2
-                                int puntJ2 = rs4.getInt(2);
+                                //int puntJ2 = rs4.getInt(2);
                                 con.setAutoCommit(false);
-                                SQL3= "INSERT Partidastats (TurnosJugados, Ganador, PuntosJugadorUno, PuntosJugadorDos) VALUES"+
-                                "(" + turnosJugados + ", " + cero + ", " + puntuacion + ", " + puntJ2 +")";
+                                SQL3= "UPDATE Partidastats SET TurnosJugados=" + turnosJugados+", PuntosJugadorUno=" + puntuacion + " WHERE IdPartida =" +idPartida;
                                 ps3= con.prepareStatement(SQL3);
                                 int result3 = ps3.executeUpdate();
                                 con.setAutoCommit(true);
                             }else{
-                                int puntJ1 = rs4.getInt(1);
+                                //int puntJ1 = rs4.getInt(1);
                                 con.setAutoCommit(false);
-                                SQL3= "INSERT Partidastats (TurnosJugados, Ganador, PuntosJugadorUno, PuntosJugadorDos) VALUES"+
-                                "(" + turnosJugados + ", " + cero + ", " + puntJ1 + ", " + puntuacion + ")";
+                                SQL3= "UPDATE Partidastats SET TurnosJugados=" + turnosJugados+", PuntosJugadorDos=" + puntuacion + " WHERE IdPartida =" +idPartida;
                                 ps3= con.prepareStatement(SQL3);
                                 int result3 = ps3.executeUpdate();
                                 con.setAutoCommit(true);

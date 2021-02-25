@@ -57,9 +57,10 @@ public class Nuevapartida extends HttpServlet {
                     rs3=st3.executeQuery(SQL3);
                     if(rs3.next()){
                        int idPartida = rs3.getInt(1);
-                       System.out.println("<div> Error de NUEVAPARTIDA el idPartida creado es " + idPartida+"</div>");
+                       //System.out.println("<div> Error de NUEVAPARTIDA el idPartida creado es " + idPartida+"</div>");
 
                         //añadimos la relacion de jugador-partida de los dos jugadores
+                        // añadimos a la tabla Partidastats
                         int cero=0;
                         con.setAutoCommit(false);
                         SQL4= "INSERT INTO Usuariospartidas(IdUsuario, IdPartida) VALUES (" + jugadorUno + ", " + idPartida + ")";
