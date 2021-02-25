@@ -31,7 +31,8 @@ public class Ajaxhandler extends HttpServlet {
                 int turno = rs.getInt(1);
                 int j1 = rs.getInt(2);
                 int j2 = rs.getInt(3);
-                int nextJ = j1;
+                int nextJ = j1;// aqui en siguiente jugador creo que esta mal y seria lo siguiente:
+
                 //si es su turno, introducir la ficha que ha colocado en la base de datos
 
                 //variables para la puntuacion
@@ -63,10 +64,10 @@ public class Ajaxhandler extends HttpServlet {
                             int cero =0;
                             // sacamos de la bbdd los datos de la partida : puntos j1 y j2 turnos ...
                             st4= con.createStatement();
-                            SQL4 ="SELECT Partidastats.PuntosJugadorUno, Partidastats.PuntosJugadorDos Partidastats.TurnosJugados FROM Partidastats";
+                            SQL4 ="SELECT Partidastats.PuntosJugadorUno, Partidastats.PuntosJugadorDos, Partidastats.TurnosJugados FROM Partidastats WHERE Partidastats.IdPartida= " +idPartida;
                             rs4 = st4.executeQuery(SQL4);
                             rs4.next();
-                            int turnosJugados = rs.getInt(3); // sacamos los turnos jugados 
+                            int turnosJugados = rs4.getInt(3); // sacamos los turnos jugados 
                             turnosJugados = turnosJugados +1; // sumamos un turno mas 
 
                             // dependiendo de quien este jugando, el valor de puntuacion sera del jugadorUno o jugadorDos
@@ -80,14 +81,14 @@ public class Ajaxhandler extends HttpServlet {
                             if(j1 ==turno){// se actualiza la bbdd dependiendo si es el turno del j1 O j2
                                 //int puntJ2 = rs4.getInt(2);
                                 con.setAutoCommit(false);
-                                SQL3= "UPDATE Partidastats SET TurnosJugados=" + turnosJugados+", PuntosJugadorUno=" + puntuacion + " WHERE IdPartida =" +idPartida;
+                                SQL3= "UPDATE Partidastats SET TurnosJugados=" + turnosJugados+", PuntosJugadorUno=" + puntuacion + " WHERE Partidastats.IdPartida =" +idPartida;
                                 ps3= con.prepareStatement(SQL3);
                                 int result3 = ps3.executeUpdate();
                                 con.setAutoCommit(true);
                             }else{
                                 //int puntJ1 = rs4.getInt(1);
                                 con.setAutoCommit(false);
-                                SQL3= "UPDATE Partidastats SET TurnosJugados=" + turnosJugados+", PuntosJugadorDos=" + puntuacion + " WHERE IdPartida =" +idPartida;
+                                SQL3= "UPDATE Partidastats SET TurnosJugados=" + turnosJugados+", PuntosJugadorDos=" + puntuacion + " WHERE Partidastats.IdPartida =" +idPartida;
                                 ps3= con.prepareStatement(SQL3);
                                 int result3 = ps3.executeUpdate();
                                 con.setAutoCommit(true);
@@ -95,7 +96,7 @@ public class Ajaxhandler extends HttpServlet {
                             }
                             
                             con.setAutoCommit(false);
-                            SQL2="UPDATE Partidas SET EstadoPartida = '"+tableroRes+"', Turno = "+nextJ+" WHERE IdPartida ="+idPartida;
+                            SQL2="UPDATE Partidas SET EstadoPartida = '"+tableroRes+"', Turno = "+nextJ+" WHERE Partidas.IdPartida ="+idPartida;
                             ps = con.prepareStatement(SQL2);
                             int result = ps.executeUpdate();
                             con.commit();
