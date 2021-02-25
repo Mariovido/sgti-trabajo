@@ -124,7 +124,6 @@ public class Ajaxhandler extends HttpServlet {
         try{
             Connection con;
             String SQL;
-            res.setContentType("application/json; charset=UTF-8"); //decimos que la respuesta es un json
             HttpSession sesion = req.getSession(false);
             int IdUsuario= (int) sesion.getAttribute("IdUsuario");
             Class.forName("com.mysql.jdbc.Driver");
@@ -158,8 +157,15 @@ public class Ajaxhandler extends HttpServlet {
                 json.put("tablero",tablero);
                 json.put("turno",turnoCliente);
                 json.put("j1",jugador1);
+
+                PrintWriter out = response.getWriter();
+                //decimos que la respuesta es un json
+                res.setContentType("application/json"); 
+                res.setCharacterEncoding("UTF-8");
                 //enviamos el json
-                res.getWriter().println(json);
+                out.print(json);
+                out.flush();
+                out.close();
             }
             rs.close();
             st.close();
