@@ -8,20 +8,13 @@ success    : function(response){
     let matriz = res.tablero;
     paintInit(matriz);
     turno = res.turno;
+    matrizSt = matriz;
 }
 });
 }
 
 var turno = false;
 getTablero();
-
-/*
-function refrescaTablero(matrizjson){
-    //sacar param
-    var matriz = JSON.stringify(matrizjson);
-    paintInit(matriz);
-}
-*/
 
 setInterval(function(){
 getTablero() // se refresca cada 5 segundos
