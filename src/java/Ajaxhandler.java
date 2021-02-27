@@ -286,31 +286,30 @@ public class Ajaxhandler extends HttpServlet {
         }
         */
         
-        
         if(longitudTablero > posicion + 9 ){
             if (estadoPartida.charAt(posicion + 9) == jugador) {
-                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_LEFT");
+                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_RIGHT");
             }
-            if (estadoPartida.charAt(posicion + 9) == jugador) {
-                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_RIGHT");
+            if (estadoPartida.charAt(posicion + 8) == jugador) {
+                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN");
             }
-            if (estadoPartida.charAt(posicion +1) == jugador) {
-                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "LEFT");
+            if (estadoPartida.charAt(posicion + 7) == jugador) {
+                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_LEFT");
+            }
+            if (estadoPartida.charAt(posicion + 1) == jugador) {
+                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "RIGHT");
             }
         }
 
         if( posicion - 9 >= 0 ){
             if (estadoPartida.charAt(posicion - 9) == jugador) {
-                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_LEFT");
+                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_LEFT");
             }
-            if (estadoPartida.charAt(posicion - 8) == jugador) {
-                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN");
-            }
-            if (estadoPartida.charAt(posicion - 9) == jugador) {
-                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_RIGHT");
+            if (estadoPartida.charAt(posicion - 7) == jugador) {
+                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_RIGHT");
             }
             if (estadoPartida.charAt(posicion - 1) == jugador) {
-                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "RIGHT");
+                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "LEFT");
             }
         }
         
@@ -321,25 +320,23 @@ public class Ajaxhandler extends HttpServlet {
         int puntuacion = 0;
         int sumaPosicion = 0;
         switch(direccion) {
-            case "UP_LEFT": sumaPosicion = -9; 
+            case "UP_LEFT": sumaPosicion = - 9; 
             break;
-            case "LEFT": sumaPosicion = -8;
+            case "UP_RIGHT": sumaPosicion = - 7;
             break;
-            case "DOWN_LEFT": sumaPosicion = -7;
+            case "LEFT": sumaPosicion = - 1;
             break;
-            case "DOWN": sumaPosicion = +1;
+            case "DOWN_RIGHT": sumaPosicion = + 9;
             break;
-            case "DOWN_RIGHT": sumaPosicion = +9;
+            case "DOWN": sumaPosicion = + 8;
             break;
-            case "RIGHT": sumaPosicion = +8;
+            case "DOWN_LEFT": sumaPosicion = + 7;
             break;
-            case "UP_RIGHT": sumaPosicion = +7;
+            case "RIGHT": sumaPosicion = + 1;
             break;
-            // faltaria aqui un case: "UP": sumaPsocicion = -1 ?
             default: sumaPosicion = sumaPosicion;
             break;
-        }
-        
+        }   
 
         int longitudTablero = estadoPartida.length();
         while((posicion + sumaPosicion) >= 0 && (posicion + sumaPosicion) < longitudTablero) {
