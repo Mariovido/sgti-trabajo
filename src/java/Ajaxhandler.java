@@ -281,6 +281,11 @@ public class Ajaxhandler extends HttpServlet {
                 break;
             }
         }
+        if (puntuacion >= 2) {
+            puntuacion += 1;
+        } else {
+            puntuacion = 0;
+        }
         return puntuacion;
     }
     
