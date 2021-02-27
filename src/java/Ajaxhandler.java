@@ -199,6 +199,8 @@ public class Ajaxhandler extends HttpServlet {
         int posicion = fila + 8*columna;
         int puntuacionSumada = 0;
         int longitudTablero = estadoPartida.length();
+
+        int [] puntuacionHold = new int[7]; 
         System.out.println("Tablero: " + estadoPartida);
         System.out.println("LongitudTablero: " + longitudTablero);
         System.out.println("Posicion: " + posicion);
@@ -210,34 +212,56 @@ public class Ajaxhandler extends HttpServlet {
         if(longitudTablero > posicion + 9 ){
             System.out.println("DOWN_RIGHT: " + estadoPartida.charAt(posicion + 9));
             if (estadoPartida.charAt(posicion + 9) == jugador) {
-                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_RIGHT");
+                int puntuacionHoldSimple = sigueRastro(estadoPartida, posicion, jugador, "DOWN_RIGHT", puntuacionHold);
+                if (puntuacionHoldSimple >= 2) {
+                    puntuacionSumada += puntuacionHoldSimple + 1;
+                }
+                puntuacionHold[0] = puntuacionHoldSimple;
             }
             System.out.println("RIGHT: " + estadoPartida.charAt(posicion + 8));
             if (estadoPartida.charAt(posicion + 8) == jugador) {
-                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "RIGHT");
+                int puntuacionHoldSimple = sigueRastro(estadoPartida, posicion, jugador, "RIGHT", puntuacionHold);
+                if (puntuacionHoldSimple >= 2) {
+                    puntuacionSumada += puntuacionHoldSimple + 1;
+                }
+                puntuacionHold[1] = puntuacionHoldSimple;
             }
             System.out.println("UP_RIGHT: " + estadoPartida.charAt(posicion + 7));
             if (estadoPartida.charAt(posicion + 7) == jugador) {
-                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_RIGHT");
+                int puntuacionHoldSimple = sigueRastro(estadoPartida, posicion, jugador, "UP_RIGHT", puntuacionHold);
+                if (puntuacionHoldSimple >= 2) {
+                    puntuacionSumada += puntuacionHoldSimple + 1;
+                }
+                puntuacionHold[2] = puntuacionHoldSimple;
             }
             System.out.println("DOWN: " + estadoPartida.charAt(posicion + 1));
             if (estadoPartida.charAt(posicion + 1) == jugador) {
-                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN");
+                int puntuacionHoldSimple = sigueRastro(estadoPartida, posicion, jugador, "DOWN", puntuacionHold);
+                if (puntuacionHoldSimple >= 2) {
+                    puntuacionSumada += puntuacionHoldSimple + 1;
+                }
+                puntuacionHold[3] = puntuacionHoldSimple;
             }
         }
         System.out.println("Segundo if: " + (posicion - 9) + " >= 0");
         if( posicion - 9 >= 0 ){
             System.out.println("UP_LEFT: " + estadoPartida.charAt(posicion - 9));
             if (estadoPartida.charAt(posicion - 9) == jugador) {
-                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_LEFT");
+                int puntuacionHoldSimple = sigueRastro(estadoPartida, posicion, jugador, "UP_LEFT", puntuacionHold);
+                puntuacionSumada += puntuacionHoldSimple;
+                puntuacionHold[4] = puntuacionHoldSimple;
             }
             System.out.println("LEFT: " + estadoPartida.charAt(posicion - 8));
             if (estadoPartida.charAt(posicion - 8) == jugador) {
-                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "LEFT");
+                int puntuacionHoldSimple = sigueRastro(estadoPartida, posicion, jugador, "LEFT", puntuacionHold);
+                puntuacionSumada += puntuacionHoldSimple;
+                puntuacionHold[5] = puntuacionHoldSimple;
             }
             System.out.println("DOWN_LEFT: " + estadoPartida.charAt(posicion - 7));
             if (estadoPartida.charAt(posicion - 7) == jugador) {
-                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_LEFT");
+                int puntuacionHoldSimple = sigueRastro(estadoPartida, posicion, jugador, "DOWN_LEFT", puntuacionHold);
+                puntuacionSumada += puntuacionHoldSimple;
+                puntuacionHold[6] = puntuacionHoldSimple;
             }
         }
         
@@ -246,7 +270,7 @@ public class Ajaxhandler extends HttpServlet {
     }
 
      
-    public int sigueRastro(String estadoPartida, int posicion, int jugador, String direccion) {
+    public int sigueRastro(String estadoPartida, int posicion, int jugador, String direccion, int [] puntuacionHold) {
         int puntuacion = 0;
         int sumaPosicion = 0;
         switch(direccion) {
@@ -281,11 +305,37 @@ public class Ajaxhandler extends HttpServlet {
                 break;
             }
         }
-        if (puntuacion >= 2) {
-            puntuacion += 1;
-        } else {
-            puntuacion = 0;
-        }
+        switch(direccion) {
+            case "UP_LEFT": if (puntuacionHold[0] < 2) {
+                puntuacion = puntuacion + puntuacionHold[0];
+                if(puntuacion >= 2) {
+                    puntuacion += 1;
+                } else {
+                    puntuacion = 0;
+                };
+            }; 
+            break;
+            case "LEFT": if (puntuacionHold[1] < 2) {
+                puntuacion = puntuacion + puntuacionHold[1];
+                if(puntuacion >= 2) {
+                    puntuacion += 1;
+                } else {
+                    puntuacion = 0;
+                };
+            };
+            break;
+            case "DOWN_LEFT": if (puntuacionHold[2] < 2) {
+                puntuacion = puntuacion + puntuacionHold[2];
+                if(puntuacion >= 2) {
+                    puntuacion += 1;
+                } else {
+                    puntuacion = 0;
+                };
+            };
+            break;
+            default: puntuacion = puntuacion;
+            break;
+        }   
         return puntuacion;
     }
     
