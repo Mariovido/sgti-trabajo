@@ -201,16 +201,9 @@ public class Ajaxhandler extends HttpServlet {
         int longitudTablero = estadoPartida.length();
 
         int [] puntuacionHold = new int[7]; 
-        System.out.println("Tablero: " + estadoPartida);
-        System.out.println("LongitudTablero: " + longitudTablero);
-        System.out.println("Posicion: " + posicion);
-        System.out.println("Fila: " + fila);
-        System.out.println("Columna: " + columna);
-        System.out.println("Jugador: " + jugador);
         
-        System.out.println("Primer if: " + longitudTablero + " > " + (posicion + 9));
         if(longitudTablero > posicion + 9 ){
-            System.out.println("DOWN_RIGHT: " + estadoPartida.charAt(posicion + 9));
+            
             if (estadoPartida.charAt(posicion + 9) == jugador) {
                 int puntuacionHoldSimple = sigueRastro(estadoPartida, posicion, jugador, "DOWN_RIGHT", puntuacionHold);
                 if (puntuacionHoldSimple >= 2) {
@@ -218,7 +211,7 @@ public class Ajaxhandler extends HttpServlet {
                 }
                 puntuacionHold[0] = puntuacionHoldSimple;
             }
-            System.out.println("RIGHT: " + estadoPartida.charAt(posicion + 8));
+            
             if (estadoPartida.charAt(posicion + 8) == jugador) {
                 int puntuacionHoldSimple = sigueRastro(estadoPartida, posicion, jugador, "RIGHT", puntuacionHold);
                 if (puntuacionHoldSimple >= 2) {
@@ -226,7 +219,7 @@ public class Ajaxhandler extends HttpServlet {
                 }
                 puntuacionHold[1] = puntuacionHoldSimple;
             }
-            System.out.println("UP_RIGHT: " + estadoPartida.charAt(posicion + 7));
+            
             if (estadoPartida.charAt(posicion + 7) == jugador) {
                 int puntuacionHoldSimple = sigueRastro(estadoPartida, posicion, jugador, "UP_RIGHT", puntuacionHold);
                 if (puntuacionHoldSimple >= 2) {
@@ -243,7 +236,7 @@ public class Ajaxhandler extends HttpServlet {
                 puntuacionHold[3] = puntuacionHoldSimple;
             }
         }
-        System.out.println("Segundo if: " + (posicion - 9) + " >= 0");
+       
         if( posicion - 9 >= 0 ){
             System.out.println("UP_LEFT: " + estadoPartida.charAt(posicion - 9));
             if (estadoPartida.charAt(posicion - 9) == jugador) {
@@ -265,7 +258,7 @@ public class Ajaxhandler extends HttpServlet {
             }
         }
         
-        System.out.println("Puntuación final: " + puntuacion + puntuacionSumada);
+        
         return puntuacion + puntuacionSumada;
     }
 
@@ -299,8 +292,7 @@ public class Ajaxhandler extends HttpServlet {
             if(estadoPartida.charAt(posicion + sumaPosicion) == jugador){
                 puntuacion++;
                 posicion += sumaPosicion;
-                System.out.println("Puntuacion: " + puntuacion);
-                System.out.println("Nueva posicion: " + posicion);
+                
             } else {
                 break;
             }
