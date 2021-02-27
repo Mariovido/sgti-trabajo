@@ -297,17 +297,17 @@ public class Ajaxhandler extends HttpServlet {
             if (estadoPartida.charAt(posicion + 9) == jugador) {
                 puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_RIGHT");
             }
-            System.out.println("DOWN: " + estadoPartida.charAt(posicion + 8));
+            System.out.println("RIGHT: " + estadoPartida.charAt(posicion + 8));
             if (estadoPartida.charAt(posicion + 8) == jugador) {
-                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN");
-            }
-            System.out.println("DOWN_LEFT: " + estadoPartida.charAt(posicion + 7));
-            if (estadoPartida.charAt(posicion + 7) == jugador) {
-                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_LEFT");
-            }
-            System.out.println("RIGHT: " + estadoPartida.charAt(posicion + 1));
-            if (estadoPartida.charAt(posicion + 1) == jugador) {
                 puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "RIGHT");
+            }
+            System.out.println("UP_RIGHT: " + estadoPartida.charAt(posicion + 7));
+            if (estadoPartida.charAt(posicion + 7) == jugador) {
+                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_RIGHT");
+            }
+            System.out.println("DOWN: " + estadoPartida.charAt(posicion + 1));
+            if (estadoPartida.charAt(posicion + 1) == jugador) {
+                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN");
             }
         }
         System.out.println("Segundo if: " + (posicion - 9) + " >= 0");
@@ -316,13 +316,13 @@ public class Ajaxhandler extends HttpServlet {
             if (estadoPartida.charAt(posicion - 9) == jugador) {
                 puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_LEFT");
             }
-            System.out.println("UP_RIGHT: " + estadoPartida.charAt(posicion - 7));
-            if (estadoPartida.charAt(posicion - 7) == jugador) {
-                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_RIGHT");
-            }
-            System.out.println("LEFT: " + estadoPartida.charAt(posicion - 1));
-            if (estadoPartida.charAt(posicion - 1) == jugador) {
+            System.out.println("LEFT: " + estadoPartida.charAt(posicion - 8));
+            if (estadoPartida.charAt(posicion - 8) == jugador) {
                 puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "LEFT");
+            }
+            System.out.println("DOWN_LEFT: " + estadoPartida.charAt(posicion - 7));
+            if (estadoPartida.charAt(posicion - 7) == jugador) {
+                puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_LEFT");
             }
         }
         
@@ -330,23 +330,24 @@ public class Ajaxhandler extends HttpServlet {
         return puntuacion + puntuacionSumada;
     }
 
+    var matrizSt = "0000000;0000000;0000000;0000000;0000000;0000000;0000000"; 
     public int sigueRastro(String estadoPartida, int posicion, int jugador, String direccion) {
         int puntuacion = 0;
         int sumaPosicion = 0;
         switch(direccion) {
             case "UP_LEFT": sumaPosicion = - 9; 
             break;
-            case "UP_RIGHT": sumaPosicion = - 7;
+            case "LEFT": sumaPosicion = - 8;
             break;
-            case "LEFT": sumaPosicion = - 1;
+            case "DOWN_LEFT": sumaPosicion = - 7;
+            break;
+            case "DOWN": sumaPosicion = + 1;
+            break;
+            case "UP_RIGHT": sumaPosicion = + 7;
+            break;
+            case "RIGHT": sumaPosicion = + 8;
             break;
             case "DOWN_RIGHT": sumaPosicion = + 9;
-            break;
-            case "DOWN": sumaPosicion = + 8;
-            break;
-            case "DOWN_LEFT": sumaPosicion = + 7;
-            break;
-            case "RIGHT": sumaPosicion = + 1;
             break;
             default: sumaPosicion = sumaPosicion;
             break;
