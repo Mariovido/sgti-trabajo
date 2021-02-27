@@ -191,10 +191,11 @@ public class Ajaxhandler extends HttpServlet {
     }
 
     public int getPuntuacion(int puntuacion, String estadoPartida, int fila, int columna, boolean colocar1) { 
-        int jugador = 2;
-        if (colocar1) {
-            jugador = 1;
+        char jugador = (char) 2;
+        if(colocar1){
+            jugador = (char) 1;
         }
+        
         int posicion = fila + 8*columna;
         int puntuacionSumada=0;
         int longitudTablero = estadoPartida.length();
@@ -330,7 +331,7 @@ public class Ajaxhandler extends HttpServlet {
         return puntuacion + puntuacionSumada;
     }
 
-    var matrizSt = "0000000;0000000;0000000;0000000;0000000;0000000;0000000"; 
+     
     public int sigueRastro(String estadoPartida, int posicion, int jugador, String direccion) {
         int puntuacion = 0;
         int sumaPosicion = 0;
