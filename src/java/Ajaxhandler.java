@@ -59,7 +59,8 @@ public class Ajaxhandler extends HttpServlet {
                             } else{
                                 tableroRes = changeCharInPosition(j+8*columnaInt, '2',tablero);
                             }
-
+                            int pos = j + 8*columnaInt;// para saber la fila
+                            
                             int puntuacion;
                             int cero =0;
                             // sacamos de la bbdd los datos de la partida : puntos j1 y j2 turnos ...
@@ -77,7 +78,10 @@ public class Ajaxhandler extends HttpServlet {
                                 puntuacion = rs4.getInt(2);
                             }
 
-                            //puntuacion = getPuntuacion(puntuacion, tableroRes, j, columnaInt, colocar1); // Actualizar la BBDD.
+                            puntuacion = getPuntuacion(puntuacion, tableroRes, j, columnaInt, colocar1);
+                            
+                            //System.out.println("Puntuacion = " + puntuacion);
+                            // Actualizar la BBDD.
                             if(j1 ==turno){// se actualiza la bbdd dependiendo si es el turno del j1 O j2
                                 //int puntJ2 = rs4.getInt(2);
                                 con.setAutoCommit(false);
@@ -195,7 +199,94 @@ public class Ajaxhandler extends HttpServlet {
         int posicion = fila + 8*columna;
         int puntuacionSumada=0;
         int longitudTablero = estadoPartida.length();
-
+        /*
+        
+        if(posicion == 0){
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "RIGHT");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"DOWN_RIGHT");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"DOWN");
+            
+            System.out.println("PuntuacionSUMADA EN POS 0  = " + puntuacionSumada);
+        }
+        
+        if(posicion == 6){
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"UP_RIGHT");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"RIGHT");
+            System.out.println("PuntuacionSUMADA EN POSICION 6  = " +puntuacionSumada);
+        }
+        
+        if(posicion == 48){
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "LEFT");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"DOWN_LEFT");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"DOWN");
+            
+            System.out.println("PuntuacionSUMADA EN POSICION 48  = " + puntuacionSumada);
+        }
+        
+        if(posicion == 54){
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "LEFT");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"UP_LEFT");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"UP");
+            
+            System.out.println("PuntuacionSUMADA EN POSICION 54  = " + puntuacionSumada);
+        }
+        // para los bordes del tablero, borde izquierdo, derecho, arriba y abajo 
+        if(posicion >=1 && posicion < 6){
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP");
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_RIGHT");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"RIGHT");
+             puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_RIGHT");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"DOWN");
+            
+            System.out.println("PuntuacionSUMADA LATERAL IZQ = " + puntuacionSumada);
+        }
+        
+        if(posicion >=49 && posicion < 54){
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP");
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_LEFT");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"LEFT");
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_LEFT");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"DOWN");
+            
+            System.out.println("PuntuacionSUMADA EN LAETRAL DERECHO = " + puntuacionSumada);
+        }
+        
+        if(posicion ==8 || posicion == 16 || posicion ==24 || posicion ==32 || posicion ==40 ){
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "LEFT");
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_LEFT");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"DOWN");
+             puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_RIGHT");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"RIGHT");
+            System.out.println("PuntuacionSUMADA EN LATERAL ARRIBA  = " + puntuacionSumada);
+        }
+        
+        if(posicion == 14 || posicion ==22 || posicion == 30 || posicion ==38 || posicion == 46){
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "LEFT");
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_LEFT");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"UP");
+             puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_RIGHT");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"RIGHT");
+            
+            System.out.println("PuntuacionSUMADA EN LAETRAL ABAJO  = " + puntuacionSumada);
+        }
+        
+        
+        if((8 <posicion && posicion < 14) ||(16 <posicion && posicion <22) || (24 <posicion && posicion <30) || (32 <posicion && posicion <38) ||(40 <posicion && posicion <46) ){
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP");
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_RIGHT");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"RIGHT");
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_RIGHT");
+            puntuacionSumada += sigueRastro (estadoPartida, posicion, jugador,"DOWN");
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "DOWN_LEFT");
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "LEFT");
+            puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_LEFT");
+            
+            System.out.println("PuntuacionSUMADA EN CUADRO DE DENTRO= " + puntuacionSumada);
+        }
+        */
+        
+        
         if(longitudTablero > posicion + 9 ){
             if (estadoPartida.charAt(posicion + 9) == jugador) {
                 puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_LEFT");
@@ -203,7 +294,7 @@ public class Ajaxhandler extends HttpServlet {
             if (estadoPartida.charAt(posicion + 9) == jugador) {
                 puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "UP_RIGHT");
             }
-            if (estadoPartida.charAt(posicion + 1) == jugador) {
+            if (estadoPartida.charAt(posicion +1) == jugador) {
                 puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "LEFT");
             }
         }
@@ -222,6 +313,7 @@ public class Ajaxhandler extends HttpServlet {
                 puntuacionSumada += sigueRastro(estadoPartida, posicion, jugador, "RIGHT");
             }
         }
+        
         return puntuacion + puntuacionSumada;
     }
 
@@ -229,20 +321,21 @@ public class Ajaxhandler extends HttpServlet {
         int puntuacion = 0;
         int sumaPosicion = 0;
         switch(direccion) {
-            case "UP_LEFT": sumaPosicion = 9; 
+            case "UP_LEFT": sumaPosicion = -9; 
             break;
-            case "LEFT": sumaPosicion = 1;
+            case "LEFT": sumaPosicion = -8;
             break;
-            case "DOWN_LEFT": sumaPosicion = -9;
+            case "DOWN_LEFT": sumaPosicion = -7;
             break;
-            case "DOWN": sumaPosicion = -8;
+            case "DOWN": sumaPosicion = +1;
             break;
-            case "DOWN_RIGHT": sumaPosicion = -9;
+            case "DOWN_RIGHT": sumaPosicion = +9;
             break;
-            case "RIGHT": sumaPosicion = -1;
+            case "RIGHT": sumaPosicion = +8;
             break;
-            case "UP_RIGHT": sumaPosicion = 9;
+            case "UP_RIGHT": sumaPosicion = +7;
             break;
+            // faltaria aqui un case: "UP": sumaPsocicion = -1 ?
             default: sumaPosicion = sumaPosicion;
             break;
         }
@@ -257,4 +350,6 @@ public class Ajaxhandler extends HttpServlet {
         }
         return puntuacion;
     }
+    
+  
 }
