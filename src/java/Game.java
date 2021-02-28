@@ -6,9 +6,9 @@ import javax.servlet.http.*;
 public class Game extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         Connection con;
-        Statement st, stnicks;
-        ResultSet rs, rsnicks;
-        String SQL;
+        Statement st, stnicks,st2;
+        ResultSet rs, rsnicks,rs2;
+        String SQL,SQL2;
         int IdUsuario, IdPartida;
         PrintWriter out;
 
@@ -40,13 +40,38 @@ public class Game extends HttpServlet {
                     rsnicks = stnicks.executeQuery(SQLNicks);
 
                     //* Consulta provisional hasta arreglar metodos
-                     
+
                     String SQLprov = "SELECT * FROM Usuarios WHERE IdUsuario =" +IdUsuario;
                     Statement stprov;
                     ResultSet rsprov;
                     stprov = con.createStatement();
                     rsprov = stprov.executeQuery(SQLprov);
 
+                    // consulta PartidaStats para que muestre los puntos
+                    st2=con.createStatement();
+                    SQL2= "SELECT Partidastats.PuntosJugadorUno, Partidastats.PuntosJugadorDos, Partidastats.TurnosJugados FROM Partidastats WHERE Partidastats.IdPartida="+ IdPartida ;
+                    rs2= st2.executeQuery(SQL2);
+
+                    rs2.next();
+                    int puntosJ1=rs2.getInt(1);
+                    int puntosJ2 = rs2.getInt(2);
+                    int turnos = rs2.getInt(3);
+                            //System.out.println("PUNTOS JUGADOR UNO: "+ puntosJ1 +" , PUNTOS JUGADOR DOS: "+ puntosJ2);
+                    int puntosGanador = 0;
+                    int Ganador = 0;
+                    if(turnos == 49){
+                        if(puntosJ1>puntosJ2){
+                            puntosGanador = puntosJ1;
+                            Ganador= rs.getInt(3);
+                            System.out.println("Ganador: " + Ganador);
+                            // faltaria la sql para la bbdd
+                        }else{
+                            puntosGanador = puntosJ2;
+                            Ganador = rs.getInt(4);
+                            System.out.println("Ganador: " + Ganador);
+                        }
+                    }
+                    System.out.println("puntosGanador " + puntosGanador +" id ganador " +Ganador);
                     //HTML
                     res.setContentType("text/html");
                     out.println("<!DOCTYPE html>");
@@ -75,11 +100,16 @@ public class Game extends HttpServlet {
                     out.println("    <main>");
                     out.println("        <div id='jugadores'>");
                     if(rsnicks.next()){
-                        out.println("            <span id='local'>"+rsnicks.getString(1)+"</span> vs.");
+                        out.println("            <span id='local'>"+rsnicks.getString(1)+"</span> vs. ");
                     }
                     if(rsnicks.next()){
                         out.println("            <span id='remoto'>"+rsnicks.getString(1)+"</span>");
                     }
+                     
+                    if(turnos ==49){
+                        out.println("           <span id='ganador'>" + Ganador +"</span> con puntos: " +puntosGanador);
+                    }
+                    out.println("                <span puntosJ1");
                     out.println("        </div>");
                     out.println("    </br>");
                     //Tablero
