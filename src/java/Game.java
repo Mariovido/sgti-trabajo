@@ -64,7 +64,7 @@ public class Game extends HttpServlet {
                             puntosGanador = puntosJ1;
                             Ganador= rs.getInt(3);
                             System.out.println("Ganador: " + Ganador);
-                            // faltaria la sql para la bbdd
+                            
                         }else{
                             puntosGanador = puntosJ2;
                             Ganador = rs.getInt(4);
@@ -100,14 +100,14 @@ public class Game extends HttpServlet {
                     out.println("    <main>");
                     out.println("        <div id='jugadores'>");
                     if(rsnicks.next()){
-                        out.println("            <span id='local'>"+rsnicks.getString(1)+"</span> vs. ");
+                        out.println("            <span id='local'>"+rsnicks.getString(1)+"</span>: "+puntosJ1 +" vs. ");
                     }
                     if(rsnicks.next()){
-                        out.println("            <span id='remoto'>"+rsnicks.getString(1)+"</span>");
+                        out.println("            <span id='remoto'>"+rsnicks.getString(1)+"</span>: " + puntosJ2 +" ");
                     }
                      
                     if(turnos ==49){
-                        out.println("           <span id='ganador'>" + Ganador +"</span> con puntos: " +puntosGanador);
+                        out.println("           <span id='ganador'>" + Ganador +"</span>, con puntos: " +puntosGanador);
                     }
                     out.println("                <span puntosJ1");
                     out.println("        </div>");
