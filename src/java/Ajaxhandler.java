@@ -141,8 +141,8 @@ public class Ajaxhandler extends HttpServlet {
             String numeroPartida = req.getParameter("PARTIDA");
             // se pasa el idPartida a int para usarlo en la SQL
             int idPartida = Integer.parseInt(numeroPartida);
-            Statement st;
-            ResultSet rs;
+            Statement st, statsST;
+            ResultSet rs, statsRS;
             SQL="SELECT Partidas.EstadoPartida, Partidas.Turno, Partidas.JugadorUno FROM Partidas WHERE Partidas.IdPartida =" + idPartida;
             st = con.createStatement();
             rs = st.executeQuery(SQL);
@@ -161,11 +161,24 @@ public class Ajaxhandler extends HttpServlet {
                 if (j1 == IdUsuario){
                     jugador1 = "clientelocal";
                 }
+
+                //sacamos la puntuacion
+                statsST=con.createStatement();
+                String statSQL= "SELECT Partidastats.PuntosJugadorUno, Partidastats.PuntosJugadorDos, Partidastats.TurnosJugados FROM Partidastats WHERE Partidastats.IdPartida="+ IdPartida ;
+                statsRS= statsST.executeQuery(statsSQL);
+                int pj1 = 0;
+                int pj2 = 0;
+                if (statsRS.next()){
+                    pj1 = statsRS.getInt(1);
+                    pj2 = statsRS.getInt(2);
+                }
                 //ahora formamos la respuesta, que esta compuesta por el string de 012, por el turno y por quien es cada unno
                 JSONObject json = new JSONObject();
                 json.put("tablero",tablero);
                 json.put("turno",turnoCliente);
                 json.put("j1",jugador1);
+                json.put("puntos1",pj1);
+                json.put("puntos2",pj2);
 
                 PrintWriter out = res.getWriter();
                 //decimos que la respuesta es un json
@@ -178,6 +191,8 @@ public class Ajaxhandler extends HttpServlet {
             }
             rs.close();
             st.close();
+            statsRS.close();
+            statsST.close();
             con.close();
         }catch(Exception e){
             System.out.println("Error en ajaxhandler: "+e);

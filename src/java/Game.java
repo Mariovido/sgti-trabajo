@@ -100,10 +100,10 @@ public class Game extends HttpServlet {
                     out.println("    <main>");
                     out.println("        <div id='jugadores'>");
                     if(rsnicks.next()){
-                        out.println("            <span id='local'>"+rsnicks.getString(1)+"</span>: "+puntosJ1 +" vs. ");
+                        out.println("            <span id='local'>"+rsnicks.getString(1)+"</span>: <span id='puntosj1'>"+puntosJ1 +"</span> vs. ");
                     }
                     if(rsnicks.next()){
-                        out.println("            <span id='remoto'>"+rsnicks.getString(1)+"</span>: " + puntosJ2 +" ");
+                        out.println("            <span id='remoto'>"+rsnicks.getString(1)+"</span>: <span id ='puntosj2>'" + puntosJ2 +"</span> ");
                     }
                      
                     if(turnos ==49){
