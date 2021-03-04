@@ -164,8 +164,8 @@ public class Ajaxhandler extends HttpServlet {
 
                 //sacamos la puntuacion
                 statsST=con.createStatement();
-                String statSQL= "SELECT Partidastats.PuntosJugadorUno, Partidastats.PuntosJugadorDos, Partidastats.TurnosJugados FROM Partidastats WHERE Partidastats.IdPartida="+ IdPartida ;
-                statsRS= statsST.executeQuery(statsSQL);
+                String statSQL= "SELECT Partidastats.PuntosJugadorUno, Partidastats.PuntosJugadorDos, Partidastats.TurnosJugados FROM Partidastats WHERE Partidastats.IdPartida="+ idPartida ;
+                statsRS= statsST.executeQuery(statSQL);
                 int pj1 = 0;
                 int pj2 = 0;
                 if (statsRS.next()){
@@ -188,11 +188,12 @@ public class Ajaxhandler extends HttpServlet {
                 out.print(json);
                 out.flush();
                 out.close();
+                statsRS.close();
+                statsST.close();
             }
             rs.close();
             st.close();
-            statsRS.close();
-            statsST.close();
+            
             con.close();
         }catch(Exception e){
             System.out.println("Error en ajaxhandler: "+e);
