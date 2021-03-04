@@ -11,8 +11,8 @@ success    : function(response){
     matrizSt = matriz;
     var p1 = res.puntos1;
     var p2 = res.puntos2;
-    $(#puntosj1).text(p1);
-    $(#puntosj2).text(p2);
+    $('#puntosj1').text(p1);
+    $('#puntosj2').ext(p2);
 }
 });
 }
