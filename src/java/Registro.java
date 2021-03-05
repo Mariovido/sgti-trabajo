@@ -27,7 +27,7 @@ public class Registro extends HttpServlet {
             out.println("<nav class='main-header__nav'>");
             out.println("<ul class='main-header__item-list'>");
             out.println("<li class='main-header__item'><a class='active' href=''>Registrarse</a></li>");
-            out.println("<li class='main-header__item'><a href='/login'>Iniciar sesi�n</a></li>");
+            out.println("<li class='main-header__item'><a href='/sgti-trabajo/login'>Iniciar sesi�n</a></li>");
             out.println("</ul>");
             out.println("</nav>");
             out.println("</header>");
