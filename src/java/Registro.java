@@ -52,7 +52,7 @@ public class Registro extends HttpServlet {
             out.println("</div>");
 
             out.println("<div class='form__group'>");
-            out.println("<input name='PASS' type='password' placeholder='Contraseï¿½a' class='form__input' />");
+            out.println("<input name='PASS' type='password' placeholder='Contraseñaa' class='form__input' />");
             out.println("</div>");
 
             out.println("<button class='btn' type='submit'>Registrarse</button>");
@@ -104,7 +104,7 @@ public class Registro extends HttpServlet {
 
             }else{
 
-                SQL="INSERT INTO Usuarios (Nick, Correo, Contraseï¿½a, Metodo, Nombre, Conectado) VALUES ('" + nick + "', '" +
+                SQL="INSERT INTO Usuarios (Nick, Correo, Contraseña, Metodo, Nombre, Conectado) VALUES ('" + nick + "', '" +
                 correo + "', '" + pass + "', '" + metodo + "', '" + nombre + "', " + conectado + ")";
                 ps = con.prepareStatement(SQL);
                 result = ps.executeUpdate();

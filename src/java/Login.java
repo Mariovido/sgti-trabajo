@@ -27,7 +27,7 @@ public class Login extends HttpServlet {
             out.println("<nav class='main-header__nav'>");
             out.println("<ul class='main-header__item-list'>");
             out.println("<li class='main-header__item'><a href='/sgti-trabajo/registro'>Registrarse</a></li>");
-            out.println("<li class='main-header__item'><a class='active' href=''>Iniciar sesiÃ³n</a></li>");
+            out.println("<li class='main-header__item'><a class='active' href=''>Iniciar sesión</a></li>");
             out.println("</ul>");
             out.println("</nav>");
             out.println("</header>");
@@ -44,10 +44,10 @@ public class Login extends HttpServlet {
             out.println("</div>");
 
             out.println("<div class='form__group'>");
-            out.println("<input name='PASS' type='password' placeholder='Contraseï¿½a' class='form__input' />");
+            out.println("<input name='PASS' type='password' placeholder='Contraseña' class='form__input' />");
             out.println("</div>");
 
-            out.println("<button class='btn' type='submit'>Iniciar sesiï¿½n</button>");
+            out.println("<button class='btn' type='submit'>Iniciar sesión</button>");
             out.println("</form>");
             out.println("</div>");
             out.println("</main>");
@@ -76,7 +76,7 @@ public class Login extends HttpServlet {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
 
             st= con.createStatement();
-            SQL="SELECT * FROM Usuarios WHERE Nick='" + user + "' AND Contraseï¿½a='" + pass + "'";
+            SQL="SELECT * FROM Usuarios WHERE Nick='" + user + "' AND Contraseña='" + pass + "'";
             rs=st.executeQuery(SQL);
 
             if(!rs.next()) {
