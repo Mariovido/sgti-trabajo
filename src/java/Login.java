@@ -91,8 +91,9 @@ public class Login extends HttpServlet {
                 misesion.setAttribute("Nick", user);
 
                 // y se redirige a principal
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/principal");
-                rd.forward(req, res);
+                //RequestDispatcher rd = getServletContext().getRequestDispatcher("/principal");
+                //rd.forward(req, res);
+                res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/principal");
 
                 
                 /*

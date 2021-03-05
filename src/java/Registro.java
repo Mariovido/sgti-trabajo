@@ -27,7 +27,7 @@ public class Registro extends HttpServlet {
             out.println("<nav class='main-header__nav'>");
             out.println("<ul class='main-header__item-list'>");
             out.println("<li class='main-header__item'><a class='active' href=''>Registrarse</a></li>");
-            out.println("<li class='main-header__item'><a href='/login'>Iniciar sesión</a></li>");
+            out.println("<li class='main-header__item'><a href='/login'>Iniciar sesiï¿½n</a></li>");
             out.println("</ul>");
             out.println("</nav>");
             out.println("</header>");
@@ -36,7 +36,7 @@ public class Registro extends HttpServlet {
             out.println("<div class='user'>");
             out.println("<header class='user__header'>");
             out.println("<img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg' alt='logo' />");
-            out.println("<h1 class='user__title'>Regístrese para poder jugar</h1>");
+            out.println("<h1 class='user__title'>Regï¿½strese para poder jugar</h1>");
             out.println("</header>");
             out.println("<form name='formulario' class='form' action='http://juegocraya.duckdns.org:8080/sgti-trabajo/registro' method='POST' onsubmit='return validarRegistro()'>");
             out.println("<div class='form__group'>");
@@ -52,7 +52,7 @@ public class Registro extends HttpServlet {
             out.println("</div>");
 
             out.println("<div class='form__group'>");
-            out.println("<input name='PASS' type='password' placeholder='Contraseña' class='form__input' />");
+            out.println("<input name='PASS' type='password' placeholder='Contraseï¿½a' class='form__input' />");
             out.println("</div>");
 
             out.println("<button class='btn' type='submit'>Registrarse</button>");
@@ -104,7 +104,7 @@ public class Registro extends HttpServlet {
 
             }else{
 
-                SQL="INSERT INTO Usuarios (Nick, Correo, Contraseña, Metodo, Nombre, Conectado) VALUES ('" + nick + "', '" +
+                SQL="INSERT INTO Usuarios (Nick, Correo, Contraseï¿½a, Metodo, Nombre, Conectado) VALUES ('" + nick + "', '" +
                 correo + "', '" + pass + "', '" + metodo + "', '" + nombre + "', " + conectado + ")";
                 ps = con.prepareStatement(SQL);
                 result = ps.executeUpdate();
@@ -113,9 +113,11 @@ public class Registro extends HttpServlet {
 
                 // si hay un usuario se crea una variable de session
                 HttpSession misesion = req.getSession(true);
-
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/principal");
-                rd.forward(req, res);
+                misesion.setAttribute("Nick", nick);
+                //enviamos a principal
+                res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/principal");
+                //RequestDispatcher rd = getServletContext().getRequestDispatcher("/principal");
+                //rd.forward(req, res);
                 /*
                 out = res.getWriter();
                 res.setContentType("text/html");
