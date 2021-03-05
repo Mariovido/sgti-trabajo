@@ -27,7 +27,7 @@ public class Login extends HttpServlet {
             out.println("<nav class='main-header__nav'>");
             out.println("<ul class='main-header__item-list'>");
             out.println("<li class='main-header__item'><a href='/registro'>Registrarse</a></li>");
-            out.println("<li class='main-header__item'><a class='active' href=''>Iniciar sesiónn</a></li>");
+            out.println("<li class='main-header__item'><a class='active' href=''>Iniciar sesión</a></li>");
             out.println("</ul>");
             out.println("</nav>");
             out.println("</header>");

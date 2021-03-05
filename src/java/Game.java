@@ -83,7 +83,7 @@ public class Game extends HttpServlet {
                     out.println("    <header class='main-header'>");
                     out.println("        <nav class='main-header__nav'>");
                     out.println("            <ul class='main-header__item-list'>");
-                    out.println(" <li class='main-header_item'><a href='/sgti-trabajo/principal'>Mis partidas</a></li>"); 
+                    out.println(" <li class='main-header__item'><a href='/sgti-trabajo/principal'>Mis partidas</a></li>"); 
                     out.println("            </ul>");
                     out.println("        </nav>");
                     out.println("    </header>");
