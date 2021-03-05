@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class Cuenta extends HttpServlet {
-    public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+    public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         Connection con;
         Statement st;
         ResultSet rs;
@@ -47,7 +47,7 @@ public class Cuenta extends HttpServlet {
                     out.println("    <header class='main-header'>");
                     out.println("        <nav class='main-header__nav'>");
                     out.println("            <ul class='main-header__item-list'>");
-                    out.println(" <li class='main-header_item'><form method ='POST' action='/sgti-trabajo/principal'><input type='hidden' name='USER' value='"+rs.getString(2)+"'><button type ='submit'>Mis partidas </button></form></li>");              
+                    out.println(" <li class='main-header_item'><a href='/sgti-trabajo/principal'>Mis partidas</a></li>");              
                     out.println("                <li class='main-header__item'><a class='active' href=''>Mi cuenta</a></li>");
                     out.println("            </ul>");
                     out.println("        </nav>");
@@ -79,6 +79,7 @@ public class Cuenta extends HttpServlet {
                 }
             } else {
                 out.close();
+                //si no hay sesion manda pa casa
                 res.sendRedirect("http://localhost:8080/sgti-trabajo/inicio");
             }
         } catch(Exception e){

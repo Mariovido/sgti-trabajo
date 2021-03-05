@@ -27,7 +27,7 @@ public class Login extends HttpServlet {
             out.println("<nav class='main-header__nav'>");
             out.println("<ul class='main-header__item-list'>");
             out.println("<li class='main-header__item'><a href='/registro'>Registrarse</a></li>");
-            out.println("<li class='main-header__item'><a class='active' href=''>Iniciar sesión</a></li>");
+            out.println("<li class='main-header__item'><a class='active' href=''>Iniciar sesiï¿½n</a></li>");
             out.println("</ul>");
             out.println("</nav>");
             out.println("</header>");
@@ -44,10 +44,10 @@ public class Login extends HttpServlet {
             out.println("</div>");
 
             out.println("<div class='form__group'>");
-            out.println("<input name='PASS' type='password' placeholder='Contraseña' class='form__input' />");
+            out.println("<input name='PASS' type='password' placeholder='Contraseï¿½a' class='form__input' />");
             out.println("</div>");
 
-            out.println("<button class='btn' type='submit'>Iniciar sesión</button>");
+            out.println("<button class='btn' type='submit'>Iniciar sesiï¿½n</button>");
             out.println("</form>");
             out.println("</div>");
             out.println("</main>");
@@ -65,7 +65,7 @@ public class Login extends HttpServlet {
         Statement st;
         ResultSet rs;
         String SQL, user, pass;
-        PrintWriter out;
+        //PrintWriter out;
 
         user = req.getParameter("USER");
         pass = req.getParameter("PASS");
@@ -76,7 +76,7 @@ public class Login extends HttpServlet {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
 
             st= con.createStatement();
-            SQL="SELECT * FROM Usuarios WHERE Nick='" + user + "' AND Contraseña='" + pass + "'";
+            SQL="SELECT * FROM Usuarios WHERE Nick='" + user + "' AND Contraseï¿½a='" + pass + "'";
             rs=st.executeQuery(SQL);
 
             if(!rs.next()) {
@@ -87,13 +87,15 @@ public class Login extends HttpServlet {
             } else {
                 // si hay un usuario se crea una variable de session
                 HttpSession misesion = req.getSession(true);
-                // y se redirige a la pantalla de registro de partidas iniciadas
+                //insertamos el nick en una variable de sesion
+                misesion.setAttribute("Nick", user);
 
-                /*RequestDispatcher rd = getServletContext().getRequestDispatcher("/principal");
+                // y se redirige a principal
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/principal");
                 rd.forward(req, res);
 
-                 */
-
+                
+                /*
                 out = res.getWriter();
                 res.setContentType("text/html");
                 out.println("<HTML><BODY>");
@@ -102,11 +104,11 @@ public class Login extends HttpServlet {
                 out.println("<INPUT TYPE = 'TEXT' NAME = 'USER' VALUE ='" + user + "'>");
                 out.println("<INPUT TYPE = 'SUBMIT' VALUE = 'CONTINUAR'>");
                 out.println("</FORM></BODY></HTML>");
-
+                */
                 rs.close();
                 st.close();
                 con.close();
-                out.close();
+                //out.close();
             }
         }catch(Exception e){
             System.out.println("<div> Error " + e + "</div>");

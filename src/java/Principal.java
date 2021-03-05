@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class Principal extends HttpServlet {
-    public void doPost(HttpServletRequest req, HttpServletResponse res) {
+    public void doGet(HttpServletRequest req, HttpServletResponse res) {
         Connection con;
         Statement st,st2;
         ResultSet rs,rs2;
@@ -21,14 +21,15 @@ public class Principal extends HttpServlet {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuatroenraya?serverTimezone=UTC","root","1234");
                 //recogemos el nick del form 
-                // recogemos el nick del form anterior y hacemos un select para saber el IDusuario
-                nick= req.getParameter("USER");
+                // recogemos el nick de la sesion y hacemos un select para saber el IDusuario
+                nick = (String) sesion.getAttribute("Nick");
                 st2 = con.createStatement();
                 SQL2= "SELECT * FROM Usuarios WHERE Usuarios.Nick='"+nick+"'";
                 rs2 =st2.executeQuery(SQL2);
                 // se ha comprobado que ni el nick ni el rs2 es null.
                 if(rs2.next()){
                     IdUsuario = rs2.getInt(1);
+                    //introducimos el Id Usuario en la sesion
                     sesion.setAttribute("IdUsuario", IdUsuario);
                     //out.println(IdUsuario);
                     // se ha comprobado que se recoge bien el IdUsuario
@@ -54,7 +55,7 @@ public class Principal extends HttpServlet {
                     out.println("        <nav class='main-header__nav'>");
                     out.println("            <ul class='main-header__item-list'>");
                     out.println("                <li class='main-header__item'><a class='active' href=''>Mis partidas</a></li>");
-                    out.println("                <li class='main-header__item'><form method='POST' action='/sgti-trabajo/cuenta'><button type='submit'>Mi cuenta</button></form></li>");
+                    out.println("                <li class='main-header__item'><a href='/sgti-trabajo/cuenta'>Mi cuenta</a></li>");
                     out.println("            </ul>");
                     out.println("        </nav>");
                     out.println("    </header>");
@@ -82,7 +83,7 @@ public class Principal extends HttpServlet {
 
                         }
                         else if(rs.getString(2).equals(String.valueOf(IdUsuario))){  
-                            out.println("            <div class='bloque'>Su turno </br>Id:"+rs.getString(1));
+                            out.println("            <div class='bloque'>Tu turno </br>Id:"+rs.getString(1));
                             out.println("               <form method='POST' action='/sgti-trabajo/game'>");
                             out.println("                   <input type='hidden' value='"+rs.getString(1)+"' name='IDPARTIDA'>");
                             out.println("                   <input type='submit' value='Seleccionar' class='form__input'>");
@@ -112,6 +113,7 @@ public class Principal extends HttpServlet {
 
                 }
             } else {   
+                //si no hay sesion envia pa casa
                 res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/inicio");
             }
         } catch (Exception e){

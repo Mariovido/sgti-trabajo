@@ -39,14 +39,6 @@ public class Game extends HttpServlet {
                     stnicks = con.createStatement();
                     rsnicks = stnicks.executeQuery(SQLNicks);
 
-                    //* Consulta provisional hasta arreglar metodos
-
-                    String SQLprov = "SELECT * FROM Usuarios WHERE IdUsuario =" +IdUsuario;
-                    Statement stprov;
-                    ResultSet rsprov;
-                    stprov = con.createStatement();
-                    rsprov = stprov.executeQuery(SQLprov);
-
                     // consulta PartidaStats para que muestre los puntos
                     st2=con.createStatement();
                     SQL2= "SELECT Partidastats.PuntosJugadorUno, Partidastats.PuntosJugadorDos, Partidastats.TurnosJugados FROM Partidastats WHERE Partidastats.IdPartida="+ IdPartida ;
@@ -91,9 +83,7 @@ public class Game extends HttpServlet {
                     out.println("    <header class='main-header'>");
                     out.println("        <nav class='main-header__nav'>");
                     out.println("            <ul class='main-header__item-list'>");
-                    if(rsprov.next()){
-                        out.println(" <li class='main-header_item'><form method ='POST' action='/sgti-trabajo/principal'><input type='hidden' name='USER' value='"+rsprov.getString(2)+"'><button type ='submit'>Mis partidas </button></form></li>"); 
-                    }   
+                    out.println(" <li class='main-header_item'><a href='/sgti-trabajo/principal'>Mis partidas</a></li>"); 
                     out.println("            </ul>");
                     out.println("        </nav>");
                     out.println("    </header>");
@@ -141,9 +131,7 @@ public class Game extends HttpServlet {
 
                     rs.close();
                     rsnicks.close();
-                    rsprov.close();
                     stnicks.close();
-                    stprov.close();
                     st.close();
                     con.close();
                 }
