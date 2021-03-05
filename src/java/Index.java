@@ -6,9 +6,9 @@ import javax.servlet.http.*;
 public class Index extends HttpServlet {
 
     public void doGet(HttpServletRequest req, HttpServletResponse res)  throws IOException, ServletException {
-        RequestDispatcher rd = req.getRequestDispatcher("web/inicio.html");
-        rd.forward(req, res);
-        /*
+        //RequestDispatcher rd = req.getRequestDispatcher("web/inicio.html");
+        //rd.forward(req, res);
+        
         PrintWriter out = res.getWriter();
         out.println("<!DOCTYPE html>");
         out.println("<html lang='en'>");
@@ -22,8 +22,8 @@ public class Index extends HttpServlet {
         out.println("<header class='main-header'>");
         out.println("<nav class='main-header__nav'>");
         out.println("<ul class='main-header__item-list'>");
-        out.println("<li class='main-header__item'><a href='web/registro.html'>Registrarse</a></li>");
-        out.println("<li class='main-header__item'><a href='web/login.html'>Iniciar sesión</a></li>");
+        out.println("<li class='main-header__item'><a href='/sgti-trabajo/registro'>Registrarse</a></li>");
+        out.println("<li class='main-header__item'><a href='/sgti-trabajo/login'>Iniciar sesión</a></li>");
         out.println("</ul>");
         out.println("</nav>");
         out.println("</header>");
@@ -35,6 +35,6 @@ public class Index extends HttpServlet {
         out.println("</body>");
         out.println("</html>");
         out.close();
-        */
+        
     }
 }

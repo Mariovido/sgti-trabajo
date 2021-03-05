@@ -93,7 +93,7 @@ public class Game extends HttpServlet {
                         out.println("            <span id='local'>"+rsnicks.getString(1)+"</span>: <span id='puntosj1'>"+puntosJ1 +"</span> vs. ");
                     }
                     if(rsnicks.next()){
-                        out.println("            <span id='remoto'>"+rsnicks.getString(1)+"</span>: <span id ='puntosj2>'" + puntosJ2 +"</span> ");
+                        out.println("            <span id='remoto'>"+rsnicks.getString(1)+"</span>: <span id ='puntosj2'>" + puntosJ2 +"</span> ");
                     }
                      
                     if(turnos ==49){
