@@ -61,7 +61,7 @@ public class Principal extends HttpServlet {
                     out.println("    </header>");
                     out.println("    <main>");
                     out.println("        <h1>Bienvenido</h1>");
-                    out.println("        <p>AquÃ­ podrÃ¡ ver todas sus partidas iniciadas</p>");
+                    out.println("        <p>Aquí podrá ver todas sus partidas iniciadas</p>");
                     out.println("                        <div class='user'>");
                     out.println("                    <header class='user__header'>");
                     out.println("                        <h1 class='user__title'>Inicie una nueva partida</h1>");

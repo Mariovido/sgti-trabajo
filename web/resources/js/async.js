@@ -12,7 +12,7 @@ success    : function(response){
     var p1 = res.puntos1;
     var p2 = res.puntos2;
     $('#puntosj1').text(p1);
-    $('#puntosj2').ext(p2);
+    $('#puntosj2').text(p2);
 }
 });
 }

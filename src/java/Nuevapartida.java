@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class Nuevapartida extends HttpServlet {
-    public void doPost(HttpServletRequest req, HttpServletResponse res) {
+    public void doPost(HttpServletRequest req, HttpServletResponse res)throws IOException, ServletException {
         Connection con;
         PrintWriter out;
         String SQL, SQL2,SQL3,SQL4,SQL5,SQL6,SQL7;
@@ -98,4 +98,6 @@ public class Nuevapartida extends HttpServlet {
             System.out.println("<div> Error de NUEVAPARTIDA" + e + "</div>");
         }
     }
+    
+    
 }

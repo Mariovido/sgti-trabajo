@@ -27,7 +27,7 @@ public class Registro extends HttpServlet {
             out.println("<nav class='main-header__nav'>");
             out.println("<ul class='main-header__item-list'>");
             out.println("<li class='main-header__item'><a class='active' href=''>Registrarse</a></li>");
-            out.println("<li class='main-header__item'><a href='/sgti-trabajo/login'>Iniciar sesiï¿½n</a></li>");
+            out.println("<li class='main-header__item'><a href='/sgti-trabajo/login'>Iniciar sesión</a></li>");
             out.println("</ul>");
             out.println("</nav>");
             out.println("</header>");
@@ -36,7 +36,7 @@ public class Registro extends HttpServlet {
             out.println("<div class='user'>");
             out.println("<header class='user__header'>");
             out.println("<img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg' alt='logo' />");
-            out.println("<h1 class='user__title'>Regï¿½strese para poder jugar</h1>");
+            out.println("<h1 class='user__title'>Regístrese para poder jugar</h1>");
             out.println("</header>");
             out.println("<form name='formulario' class='form' action='http://juegocraya.duckdns.org:8080/sgti-trabajo/registro' method='POST' onsubmit='return validarRegistro()'>");
             out.println("<div class='form__group'>");
