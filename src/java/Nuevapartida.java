@@ -25,7 +25,7 @@ public class Nuevapartida extends HttpServlet {
                 SQL2 = "SELECT * FROM Usuarios Where Usuarios.Nick='"+nick+"'";
                 rs =st.executeQuery(SQL2);
 
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/principal");
+                //RequestDispatcher rd = getServletContext().getRequestDispatcher("/principal");
 
                 if (!rs.next()) {
                     rs.close();
@@ -33,7 +33,9 @@ public class Nuevapartida extends HttpServlet {
                     con.close();
 
                     //enviamos la peticion a Principal
-                    rd.forward(req, res);
+                    //rd.forward(req, res);
+                    res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/principal");
+
 
                 } else {
                     String estadoPartida = "0000000;0000000;0000000;0000000;0000000;0000000;0000000";
@@ -59,8 +61,8 @@ public class Nuevapartida extends HttpServlet {
                        int idPartida = rs3.getInt(1);
                        //System.out.println("<div> Error de NUEVAPARTIDA el idPartida creado es " + idPartida+"</div>");
 
-                        //añadimos la relacion de jugador-partida de los dos jugadores
-                        // añadimos a la tabla Partidastats
+                        //aï¿½adimos la relacion de jugador-partida de los dos jugadores
+                        // aï¿½adimos a la tabla Partidastats
                         int cero=0;
                         con.setAutoCommit(false);
                         SQL4= "INSERT INTO Usuariospartidas(IdUsuario, IdPartida) VALUES (" + jugadorUno + ", " + idPartida + ")";
@@ -89,7 +91,8 @@ public class Nuevapartida extends HttpServlet {
                     con.close();
 
                     //enviamos la peticion a Principal
-                    rd.forward(req, res); 
+                    //rd.forward(req, res); 
+                    res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/principal");
                 }
             } else {   
                 res.sendRedirect("http://juegocraya.duckdns.org:8080/sgti-trabajo/inicio");
